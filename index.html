@@ -4,15 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#f6f5f1">
+  <meta name="theme-color" content="#0d110c">
   <title>Japanese Conversational Handbook</title>
   <script>
     (function () {
       try {
         var theme = localStorage.getItem("jp-handbook-theme-v1");
-        if (theme === "dark" || theme === "light") {
-          document.documentElement.setAttribute("data-theme", theme);
-        }
+        document.documentElement.setAttribute("data-theme", theme === "light" ? "light" : "dark");
       } catch (error) {}
     }());
   </script>
@@ -50,7 +48,7 @@
       --radius: 8px;
       color-scheme: light;
     }
-    :root[data-theme="dark"] {
+    :root:not([data-theme]), :root[data-theme="dark"] {
       --bg: #0d110c;
       --paper: #151a14;
       --surface: #1a2018;
@@ -81,40 +79,6 @@
       --open-shadow: 0 18px 42px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(185,244,74,0.06);
       --popover-shadow: 0 20px 54px rgba(0, 0, 0, 0.48);
       color-scheme: dark;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme]) {
-        --bg: #0d110c;
-        --paper: #151a14;
-        --surface: #1a2018;
-        --surface-2: #20271d;
-        --surface-3: #182316;
-        --ink: #eef6e8;
-        --muted: #aeb9a6;
-        --line: #2d382b;
-        --accent: #b9f44a;
-        --accent-rgb: 185,244,74;
-        --accent-contrast: #10140d;
-        --accent-2: #ffb86b;
-        --soft: #1e271b;
-        --soft-2: #20321b;
-        --danger: #ff9f8c;
-        --danger-bg: #2b1815;
-        --mark: #8e9988;
-        --copy: #dfe9d8;
-        --tag-ink: #d4dfcd;
-        --toolbar-bg: rgba(13,17,12,0.86);
-        --toolbar-border: rgba(55,72,50,0.82);
-        --grid-strong: rgba(185,244,74,0.055);
-        --grid-soft: rgba(255,255,255,0.025);
-        --example-bg: #162311;
-        --popover-bg: rgba(18,24,16,0.98);
-        --shadow: 0 20px 52px rgba(0, 0, 0, 0.34);
-        --entry-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
-        --open-shadow: 0 18px 42px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(185,244,74,0.06);
-        --popover-shadow: 0 20px 54px rgba(0, 0, 0, 0.48);
-        color-scheme: dark;
-      }
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -183,6 +147,65 @@
       pointer-events: none;
     }
     .mast > * { position: relative; }
+    .mast-tools {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .light-switch {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      padding: 6px 10px 6px 7px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 850;
+      box-shadow: var(--entry-shadow);
+      transition: transform 180ms cubic-bezier(.16,1,.3,1), background 180ms, border-color 180ms, color 180ms;
+    }
+    .light-switch:active {
+      transform: translateY(1px) scale(0.99);
+    }
+    .light-switch[aria-checked="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-contrast);
+    }
+    .switch-track {
+      width: 38px;
+      height: 20px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(var(--accent-rgb),0.13);
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .switch-thumb {
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--muted);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.24);
+      transition: transform 180ms cubic-bezier(.16,1,.3,1), background 180ms;
+    }
+    .light-switch[aria-checked="true"] .switch-track {
+      border-color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.20);
+    }
+    .light-switch[aria-checked="true"] .switch-thumb {
+      transform: translateX(18px);
+      background: var(--accent-contrast);
+    }
     .eyebrow {
       color: var(--accent);
       font-size: 12px;
@@ -443,32 +466,18 @@
     .tok-10 { --tok: #9a3a5a; color: var(--tok); }
     .tok-11 { --tok: #4f6072; color: var(--tok); }
     .tok-mark { color: var(--mark); }
-    :root[data-theme="dark"] .tok-0 { --tok: #b9f44a; }
-    :root[data-theme="dark"] .tok-1 { --tok: #ff9f7e; }
-    :root[data-theme="dark"] .tok-2 { --tok: #7fb7ff; }
-    :root[data-theme="dark"] .tok-3 { --tok: #ffd56f; }
-    :root[data-theme="dark"] .tok-4 { --tok: #caa7ff; }
-    :root[data-theme="dark"] .tok-5 { --tok: #6ee7e0; }
-    :root[data-theme="dark"] .tok-6 { --tok: #ff8cc6; }
-    :root[data-theme="dark"] .tok-7 { --tok: #d8f77a; }
-    :root[data-theme="dark"] .tok-8 { --tok: #ffbe82; }
-    :root[data-theme="dark"] .tok-9 { --tok: #9ebcff; }
-    :root[data-theme="dark"] .tok-10 { --tok: #ff9fb4; }
-    :root[data-theme="dark"] .tok-11 { --tok: #b6c6d8; }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme]) .tok-0 { --tok: #b9f44a; }
-      :root:not([data-theme]) .tok-1 { --tok: #ff9f7e; }
-      :root:not([data-theme]) .tok-2 { --tok: #7fb7ff; }
-      :root:not([data-theme]) .tok-3 { --tok: #ffd56f; }
-      :root:not([data-theme]) .tok-4 { --tok: #caa7ff; }
-      :root:not([data-theme]) .tok-5 { --tok: #6ee7e0; }
-      :root:not([data-theme]) .tok-6 { --tok: #ff8cc6; }
-      :root:not([data-theme]) .tok-7 { --tok: #d8f77a; }
-      :root:not([data-theme]) .tok-8 { --tok: #ffbe82; }
-      :root:not([data-theme]) .tok-9 { --tok: #9ebcff; }
-      :root:not([data-theme]) .tok-10 { --tok: #ff9fb4; }
-      :root:not([data-theme]) .tok-11 { --tok: #b6c6d8; }
-    }
+    :root:not([data-theme]) .tok-0, :root[data-theme="dark"] .tok-0 { --tok: #b9f44a; }
+    :root:not([data-theme]) .tok-1, :root[data-theme="dark"] .tok-1 { --tok: #ff9f7e; }
+    :root:not([data-theme]) .tok-2, :root[data-theme="dark"] .tok-2 { --tok: #7fb7ff; }
+    :root:not([data-theme]) .tok-3, :root[data-theme="dark"] .tok-3 { --tok: #ffd56f; }
+    :root:not([data-theme]) .tok-4, :root[data-theme="dark"] .tok-4 { --tok: #caa7ff; }
+    :root:not([data-theme]) .tok-5, :root[data-theme="dark"] .tok-5 { --tok: #6ee7e0; }
+    :root:not([data-theme]) .tok-6, :root[data-theme="dark"] .tok-6 { --tok: #ff8cc6; }
+    :root:not([data-theme]) .tok-7, :root[data-theme="dark"] .tok-7 { --tok: #d8f77a; }
+    :root:not([data-theme]) .tok-8, :root[data-theme="dark"] .tok-8 { --tok: #ffbe82; }
+    :root:not([data-theme]) .tok-9, :root[data-theme="dark"] .tok-9 { --tok: #9ebcff; }
+    :root:not([data-theme]) .tok-10, :root[data-theme="dark"] .tok-10 { --tok: #ff9fb4; }
+    :root:not([data-theme]) .tok-11, :root[data-theme="dark"] .tok-11 { --tok: #b6c6d8; }
     .jp-script .tok {
       display: inline;
     }
@@ -1072,9 +1081,6 @@
       border-color: rgba(154,58,50,0.35);
       background: var(--danger-bg);
     }
-    .theme-toggle {
-      min-width: 126px;
-    }
     pre {
       margin: 10px 0;
       overflow: auto;
@@ -1134,6 +1140,18 @@
       .mast, .panel, .form-card, .doc {
         padding: 14px;
       }
+      .mast {
+        padding-top: 62px;
+      }
+      .mast-tools {
+        left: 14px;
+        right: 14px;
+        top: 12px;
+      }
+      .light-switch {
+        width: 100%;
+        justify-content: space-between;
+      }
       .toolbar {
         padding: 10px;
       }
@@ -1187,6 +1205,12 @@
   <div class="app">
     <header class="top">
       <section class="mast">
+        <div class="mast-tools">
+          <button class="light-switch" id="themeToggle" type="button" role="switch" aria-checked="false" title="Toggle light mode">
+            <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            <span>Light mode</span>
+          </button>
+        </div>
         <div>
           <p class="eyebrow">Offline phone handbook</p>
           <h1>Nick's "Useful Japanese" Handbook!</h1>
@@ -1219,7 +1243,6 @@
             <button class="pill" id="mineToggle">My Words</button>
             <button class="pill" id="favToggle">Favorites</button>
             <button class="pill" id="expandToggle">Open Results</button>
-            <button class="pill theme-toggle" id="themeToggle" type="button" title="Cycle theme">Theme: System</button>
           </div>
         </div>
         <div class="category-select-wrap">
@@ -1390,12 +1413,6 @@
       favorites: "jp-handbook-favorites-v1",
       theme: "jp-handbook-theme-v1"
     };
-    const THEME_LABELS = {
-      system: "Theme: System",
-      dark: "Theme: Dark",
-      light: "Theme: Light"
-    };
-    const THEME_ORDER = ["system", "dark", "light"];
     const REQUIRED_FIELDS = ["id", "category", "japanese", "kana", "romaji", "english", "tone", "quirks", "example", "exampleEnglish", "exampleNotes", "relatedEntryIds", "source", "isCustom"];
     const INITIAL_VISIBLE_LIMIT = 120;
     const VISIBLE_STEP = 120;
@@ -1459,51 +1476,32 @@
     function loadStoredTheme() {
       try {
         const value = localStorage.getItem(STORAGE_KEYS.theme);
-        return THEME_ORDER.indexOf(value) >= 0 ? value : "system";
+        return value === "light" ? "light" : "dark";
       } catch (error) {
-        return "system";
+        return "dark";
       }
-    }
-    function resolvedTheme() {
-      if (state.theme === "dark" || state.theme === "light") return state.theme;
-      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
-      return "light";
     }
     function applyTheme() {
-      const theme = state.theme || "system";
-      if (theme === "dark" || theme === "light") {
-        document.documentElement.setAttribute("data-theme", theme);
-      } else {
-        document.documentElement.removeAttribute("data-theme");
-      }
+      const theme = state.theme === "light" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", theme);
       if (els.themeToggle) {
-        els.themeToggle.textContent = THEME_LABELS[theme] || THEME_LABELS.system;
-        els.themeToggle.setAttribute("aria-label", `Theme mode: ${theme}. Tap to switch.`);
-        els.themeToggle.setAttribute("aria-pressed", theme === "system" ? "false" : "true");
+        const isLight = theme === "light";
+        els.themeToggle.setAttribute("aria-checked", isLight ? "true" : "false");
+        els.themeToggle.setAttribute("aria-label", isLight ? "Light mode on. Tap for dark mode." : "Light mode off. Tap for light mode.");
       }
       const themeMeta = document.querySelector('meta[name="theme-color"]');
-      if (themeMeta) themeMeta.setAttribute("content", resolvedTheme() === "dark" ? "#0d110c" : "#f6f5f1");
+      if (themeMeta) themeMeta.setAttribute("content", theme === "dark" ? "#0d110c" : "#f6f5f1");
     }
     function saveTheme() {
       try {
-        if (state.theme === "system") localStorage.removeItem(STORAGE_KEYS.theme);
-        else localStorage.setItem(STORAGE_KEYS.theme, state.theme);
+        if (state.theme === "light") localStorage.setItem(STORAGE_KEYS.theme, "light");
+        else localStorage.removeItem(STORAGE_KEYS.theme);
       } catch (error) {}
     }
-    function cycleTheme() {
-      const index = THEME_ORDER.indexOf(state.theme);
-      state.theme = THEME_ORDER[(index + 1) % THEME_ORDER.length] || "system";
+    function toggleLightMode() {
+      state.theme = state.theme === "light" ? "dark" : "light";
       saveTheme();
       applyTheme();
-    }
-    function watchSystemTheme() {
-      if (!window.matchMedia) return;
-      const query = window.matchMedia("(prefers-color-scheme: dark)");
-      const update = () => {
-        if (state.theme === "system") applyTheme();
-      };
-      if (query.addEventListener) query.addEventListener("change", update);
-      else if (query.addListener) query.addListener(update);
     }
     function invalidateDataCaches() {
       runtime.entryCache = null;
@@ -2589,13 +2587,12 @@
     }
     function setup() {
       applyTheme();
-      watchSystemTheme();
       els.schemaBlock.textContent = JSON.stringify(ENTRY_SCHEMA, null, 2);
       els.exampleBlock.textContent = JSON.stringify(BUILT_INS[0], null, 2);
       els.categorySelect.innerHTML = CATEGORIES.map(cat => `<option value="${escapeHtml(cat.id)}">${escapeHtml(cat.label)}</option>`).join("");
       renderEntries();
       document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", () => setView(tab.dataset.view)));
-      if (els.themeToggle) els.themeToggle.addEventListener("click", cycleTheme);
+      if (els.themeToggle) els.themeToggle.addEventListener("click", toggleLightMode);
       els.search.addEventListener("input", event => {
         state.query = event.target.value;
         resetListState();
