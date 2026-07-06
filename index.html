@@ -3,30 +3,126 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f5f1">
   <title>Japanese Conversational Handbook</title>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("jp-handbook-theme-v1");
+        if (theme === "dark" || theme === "light") {
+          document.documentElement.setAttribute("data-theme", theme);
+        }
+      } catch (error) {}
+    }());
+  </script>
   <style>
     :root {
       --bg: #f6f5f1;
       --paper: #fffdf8;
+      --surface: #fbf8f0;
+      --surface-2: #f8f3e9;
+      --surface-3: #f4f5ed;
       --ink: #20211f;
       --muted: #686963;
       --line: #ded8ca;
       --accent: #2f6f62;
+      --accent-rgb: 47,111,98;
+      --accent-contrast: #fffdf8;
       --accent-2: #b45f3a;
       --soft: #ece7da;
       --soft-2: #e2ece7;
       --danger: #9a3a32;
+      --danger-bg: #fff3ef;
       --mark: #686963;
+      --copy: #33342f;
+      --tag-ink: #514f49;
+      --toolbar-bg: rgba(246,245,241,0.88);
+      --toolbar-border: rgba(222,216,202,0.82);
+      --grid-strong: rgba(32,33,31,0.035);
+      --grid-soft: rgba(32,33,31,0.025);
+      --example-bg: #f4f5ed;
+      --popover-bg: rgba(255,253,248,0.97);
       --shadow: 0 18px 45px rgba(56, 48, 35, 0.08);
+      --entry-shadow: 0 8px 22px rgba(56, 48, 35, 0.045);
+      --open-shadow: 0 16px 34px rgba(56, 48, 35, 0.09);
+      --popover-shadow: 0 18px 42px rgba(56, 48, 35, 0.17);
       --radius: 8px;
+      color-scheme: light;
+    }
+    :root[data-theme="dark"] {
+      --bg: #0d110c;
+      --paper: #151a14;
+      --surface: #1a2018;
+      --surface-2: #20271d;
+      --surface-3: #182316;
+      --ink: #eef6e8;
+      --muted: #aeb9a6;
+      --line: #2d382b;
+      --accent: #b9f44a;
+      --accent-rgb: 185,244,74;
+      --accent-contrast: #10140d;
+      --accent-2: #ffb86b;
+      --soft: #1e271b;
+      --soft-2: #20321b;
+      --danger: #ff9f8c;
+      --danger-bg: #2b1815;
+      --mark: #8e9988;
+      --copy: #dfe9d8;
+      --tag-ink: #d4dfcd;
+      --toolbar-bg: rgba(13,17,12,0.86);
+      --toolbar-border: rgba(55,72,50,0.82);
+      --grid-strong: rgba(185,244,74,0.055);
+      --grid-soft: rgba(255,255,255,0.025);
+      --example-bg: #162311;
+      --popover-bg: rgba(18,24,16,0.98);
+      --shadow: 0 20px 52px rgba(0, 0, 0, 0.34);
+      --entry-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+      --open-shadow: 0 18px 42px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(185,244,74,0.06);
+      --popover-shadow: 0 20px 54px rgba(0, 0, 0, 0.48);
+      color-scheme: dark;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --bg: #0d110c;
+        --paper: #151a14;
+        --surface: #1a2018;
+        --surface-2: #20271d;
+        --surface-3: #182316;
+        --ink: #eef6e8;
+        --muted: #aeb9a6;
+        --line: #2d382b;
+        --accent: #b9f44a;
+        --accent-rgb: 185,244,74;
+        --accent-contrast: #10140d;
+        --accent-2: #ffb86b;
+        --soft: #1e271b;
+        --soft-2: #20321b;
+        --danger: #ff9f8c;
+        --danger-bg: #2b1815;
+        --mark: #8e9988;
+        --copy: #dfe9d8;
+        --tag-ink: #d4dfcd;
+        --toolbar-bg: rgba(13,17,12,0.86);
+        --toolbar-border: rgba(55,72,50,0.82);
+        --grid-strong: rgba(185,244,74,0.055);
+        --grid-soft: rgba(255,255,255,0.025);
+        --example-bg: #162311;
+        --popover-bg: rgba(18,24,16,0.98);
+        --shadow: 0 20px 52px rgba(0, 0, 0, 0.34);
+        --entry-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+        --open-shadow: 0 18px 42px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(185,244,74,0.06);
+        --popover-shadow: 0 20px 54px rgba(0, 0, 0, 0.48);
+        color-scheme: dark;
+      }
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       background:
-        linear-gradient(90deg, rgba(32,33,31,0.035) 1px, transparent 1px) 0 0 / 36px 36px,
-        linear-gradient(180deg, rgba(32,33,31,0.025) 1px, transparent 1px) 0 0 / 36px 36px,
+        linear-gradient(90deg, var(--grid-strong) 1px, transparent 1px) 0 0 / 36px 36px,
+        linear-gradient(180deg, var(--grid-soft) 1px, transparent 1px) 0 0 / 36px 36px,
         var(--bg);
       color: var(--ink);
       font-family: "Geist", "Avenir Next", "Segoe UI", system-ui, sans-serif;
@@ -83,7 +179,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, transparent 0 58%, rgba(47,111,98,0.08) 58% 100%);
+      background: linear-gradient(120deg, transparent 0 58%, rgba(var(--accent-rgb),0.10) 58% 100%);
       pointer-events: none;
     }
     .mast > * { position: relative; }
@@ -113,7 +209,7 @@
     }
     .kana-mark {
       border: 1px solid var(--line);
-      background: #f8f2e7;
+      background: var(--surface-2);
       border-radius: var(--radius);
       aspect-ratio: 1;
       display: grid;
@@ -128,7 +224,7 @@
       border-bottom: 1px solid rgba(94, 82, 62, 0.16);
       font-size: 27px;
       font-weight: 800;
-      color: #3b433f;
+      color: var(--ink);
     }
     .panel {
       background: var(--paper);
@@ -148,7 +244,7 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 10px;
-      background: #fbf8f0;
+      background: var(--surface);
     }
     .stat b {
       display: block;
@@ -173,7 +269,7 @@
     .tab, .pill, .icon-btn, .action-btn {
       min-height: 38px;
       border: 1px solid var(--line);
-      background: #fbf8f0;
+      background: var(--surface);
       color: var(--ink);
       border-radius: var(--radius);
       padding: 9px 12px;
@@ -188,9 +284,9 @@
       transform: translateY(1px) scale(0.99);
     }
     .tab.active, .pill.active {
-      background: var(--ink);
-      color: var(--paper);
-      border-color: var(--ink);
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border-color: var(--accent);
     }
     .tab:disabled, .pill:disabled, .icon-btn:disabled, .action-btn:disabled {
       opacity: 0.48;
@@ -201,10 +297,10 @@
       position: sticky;
       top: 0;
       z-index: 5;
-      background: rgba(246, 245, 241, 0.88);
+      background: var(--toolbar-bg);
       backdrop-filter: blur(16px);
-      border: 1px solid rgba(222,216,202,0.82);
-      box-shadow: 0 12px 28px rgba(56, 48, 35, 0.06);
+      border: 1px solid var(--toolbar-border);
+      box-shadow: var(--shadow);
       border-radius: var(--radius);
       padding: 12px;
       margin-bottom: 14px;
@@ -237,7 +333,7 @@
     }
     .search:focus, .field input:focus, .field textarea:focus, .field select:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(47,111,98,0.13);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.18);
     }
     .filters {
       overflow-x: visible;
@@ -299,7 +395,7 @@
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      box-shadow: 0 8px 22px rgba(56, 48, 35, 0.045);
+      box-shadow: var(--entry-shadow);
       overflow: hidden;
       content-visibility: auto;
       contain-intrinsic-size: auto 220px;
@@ -311,8 +407,8 @@
       to { opacity: 1; transform: translateY(0); }
     }
     details.entry[open] {
-      border-color: rgba(47,111,98,0.46);
-      box-shadow: 0 16px 34px rgba(56, 48, 35, 0.09);
+      border-color: rgba(var(--accent-rgb),0.48);
+      box-shadow: var(--open-shadow);
     }
     summary {
       list-style: none;
@@ -347,6 +443,32 @@
     .tok-10 { --tok: #9a3a5a; color: var(--tok); }
     .tok-11 { --tok: #4f6072; color: var(--tok); }
     .tok-mark { color: var(--mark); }
+    :root[data-theme="dark"] .tok-0 { --tok: #b9f44a; }
+    :root[data-theme="dark"] .tok-1 { --tok: #ff9f7e; }
+    :root[data-theme="dark"] .tok-2 { --tok: #7fb7ff; }
+    :root[data-theme="dark"] .tok-3 { --tok: #ffd56f; }
+    :root[data-theme="dark"] .tok-4 { --tok: #caa7ff; }
+    :root[data-theme="dark"] .tok-5 { --tok: #6ee7e0; }
+    :root[data-theme="dark"] .tok-6 { --tok: #ff8cc6; }
+    :root[data-theme="dark"] .tok-7 { --tok: #d8f77a; }
+    :root[data-theme="dark"] .tok-8 { --tok: #ffbe82; }
+    :root[data-theme="dark"] .tok-9 { --tok: #9ebcff; }
+    :root[data-theme="dark"] .tok-10 { --tok: #ff9fb4; }
+    :root[data-theme="dark"] .tok-11 { --tok: #b6c6d8; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) .tok-0 { --tok: #b9f44a; }
+      :root:not([data-theme]) .tok-1 { --tok: #ff9f7e; }
+      :root:not([data-theme]) .tok-2 { --tok: #7fb7ff; }
+      :root:not([data-theme]) .tok-3 { --tok: #ffd56f; }
+      :root:not([data-theme]) .tok-4 { --tok: #caa7ff; }
+      :root:not([data-theme]) .tok-5 { --tok: #6ee7e0; }
+      :root:not([data-theme]) .tok-6 { --tok: #ff8cc6; }
+      :root:not([data-theme]) .tok-7 { --tok: #d8f77a; }
+      :root:not([data-theme]) .tok-8 { --tok: #ffbe82; }
+      :root:not([data-theme]) .tok-9 { --tok: #9ebcff; }
+      :root:not([data-theme]) .tok-10 { --tok: #ff9fb4; }
+      :root:not([data-theme]) .tok-11 { --tok: #b6c6d8; }
+    }
     .jp-script .tok {
       display: inline;
     }
@@ -375,7 +497,7 @@
     }
     .romaji-primary .lookup-token:hover,
     .romaji-primary .lookup-token.is-peeked {
-      background: rgba(47,111,98,0.09);
+      background: rgba(var(--accent-rgb),0.13);
       box-shadow: inset 0 -2px 0 currentColor;
     }
     .romaji-primary .lookup-token.can-open {
@@ -405,7 +527,7 @@
       font-size: 15px;
       line-height: 1.35;
       font-weight: 850;
-      color: #252a27;
+      color: var(--ink);
     }
     .kana-read span, .romaji-read span {
       border-bottom: 2px solid currentColor;
@@ -420,7 +542,7 @@
     }
     .kana-read .lookup-token:hover, .romaji-read .lookup-token:hover,
     .kana-read .lookup-token.is-peeked, .romaji-read .lookup-token.is-peeked {
-      background: rgba(47,111,98,0.09);
+      background: rgba(var(--accent-rgb),0.13);
       box-shadow: inset 0 -2px 0 currentColor;
     }
     .kana-read .lookup-token.can-open, .romaji-read .lookup-token.can-open {
@@ -449,8 +571,8 @@
     }
     .tag {
       border: 1px solid var(--line);
-      color: #514f49;
-      background: #f8f3e9;
+      color: var(--tag-ink);
+      background: var(--surface-2);
       border-radius: 999px;
       padding: 4px 8px;
       font-size: 11px;
@@ -458,7 +580,7 @@
     }
     .tag.source-user {
       background: var(--soft-2);
-      border-color: #c7dad0;
+      border-color: var(--line);
     }
     .fav {
       width: 38px;
@@ -466,13 +588,13 @@
       flex: 0 0 auto;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: #fbf8f0;
+      background: var(--surface);
       color: var(--muted);
     }
     .fav.active {
-      color: var(--accent-2);
-      border-color: rgba(180,95,58,0.46);
-      background: #fff5ec;
+      color: var(--accent);
+      border-color: rgba(var(--accent-rgb),0.52);
+      background: rgba(var(--accent-rgb),0.12);
     }
     .body {
       border-top: 1px solid var(--line);
@@ -486,7 +608,7 @@
     .reading-details {
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: #fbf8f0;
+      background: var(--surface);
       overflow: hidden;
     }
     .reading-details summary {
@@ -521,7 +643,7 @@
     }
     .script-box {
       border: 1px solid var(--line);
-      background: #fbf8f0;
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 9px;
       min-width: 0;
@@ -549,12 +671,12 @@
     .copy {
       line-height: 1.52;
       margin: 0;
-      color: #33342f;
+      color: var(--copy);
     }
     .example {
       padding: 11px;
       border-left: 4px solid var(--accent);
-      background: #f4f5ed;
+      background: var(--example-bg);
       border-radius: 0 var(--radius) var(--radius) 0;
     }
     .example .ja {
@@ -601,7 +723,7 @@
     .form-chip {
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: #fbf8f0;
+      background: var(--surface);
       padding: 8px;
       min-width: 0;
     }
@@ -624,7 +746,7 @@
       line-height: 1.32;
     }
     .note {
-      background: #fbf8f0;
+      background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 8px;
@@ -646,11 +768,11 @@
       top: 10px;
       width: min(330px, calc(100vw - 20px));
       padding: 11px;
-      border: 1px solid rgba(47,111,98,0.34);
-      background: rgba(255,253,248,0.97);
+      border: 1px solid rgba(var(--accent-rgb),0.36);
+      background: var(--popover-bg);
       color: var(--ink);
       border-radius: var(--radius);
-      box-shadow: 0 18px 42px rgba(56, 48, 35, 0.17);
+      box-shadow: var(--popover-shadow);
       opacity: 0;
       visibility: hidden;
       transform: translateY(5px);
@@ -682,7 +804,7 @@
       text-transform: lowercase;
     }
     .token-popover .pop-english {
-      color: #33342f;
+      color: var(--copy);
       font-size: 15px;
       font-weight: 820;
       line-height: 1.32;
@@ -705,7 +827,7 @@
     }
     .pop-form {
       border: 1px solid var(--line);
-      background: #fbf8f0;
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 7px;
       min-width: 0;
@@ -746,8 +868,8 @@
     .pop-meta span {
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: #f8f3e9;
-      color: #514f49;
+      background: var(--surface-2);
+      color: var(--tag-ink);
       padding: 3px 7px;
       font-size: 10px;
       font-weight: 790;
@@ -765,7 +887,7 @@
       border: 1px solid var(--accent);
       border-radius: var(--radius);
       background: var(--accent);
-      color: var(--paper);
+      color: var(--accent-contrast);
       font-size: 12px;
       font-weight: 850;
     }
@@ -855,7 +977,7 @@
     }
     .empty {
       background: var(--paper);
-      border: 1px dashed #bdb4a1;
+      border: 1px dashed var(--line);
       border-radius: var(--radius);
       padding: 24px;
       text-align: left;
@@ -887,6 +1009,7 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--paper);
+      color: var(--ink);
       min-height: 42px;
       padding: 9px 10px;
       outline: none;
@@ -907,7 +1030,7 @@
       grid-column: 1 / -1;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: #fbf8f0;
+      background: var(--surface);
       padding: 0 12px 12px;
     }
     .advanced-fields .form-grid {
@@ -930,7 +1053,7 @@
     }
     .notice {
       border: 1px solid var(--line);
-      background: #fbf8f0;
+      background: var(--surface);
       border-radius: var(--radius);
       padding: 10px;
       font-size: 14px;
@@ -942,12 +1065,15 @@
     .notice.error {
       border-color: rgba(154,58,50,0.45);
       color: var(--danger);
-      background: #fff3ef;
+      background: var(--danger-bg);
     }
     .danger {
       color: var(--danger);
       border-color: rgba(154,58,50,0.35);
-      background: #fff3ef;
+      background: var(--danger-bg);
+    }
+    .theme-toggle {
+      min-width: 126px;
     }
     pre {
       margin: 10px 0;
@@ -1093,6 +1219,7 @@
             <button class="pill" id="mineToggle">My Words</button>
             <button class="pill" id="favToggle">Favorites</button>
             <button class="pill" id="expandToggle">Open Results</button>
+            <button class="pill theme-toggle" id="themeToggle" type="button" title="Cycle theme">Theme: System</button>
           </div>
         </div>
         <div class="category-select-wrap">
@@ -1260,8 +1387,15 @@
     const TOKEN_GLOSSES = [{"japanese": "あります", "kana": "あります", "romaji": "arimasu", "english": "there is / have", "note": "Polite form of ある for things, plans, events, time, and availability. People/animals usually use います.", "terms": ["ある", "aru", "あります", "arimasu"]}, {"japanese": "ありません", "kana": "ありません", "romaji": "arimasen", "english": "there is not / do not have", "note": "Negative polite form of ある. Used for missing things, no availability, no time, or no problem depending on the noun.", "terms": ["ない", "ある", "arimasen"]}, {"japanese": "います", "kana": "います", "romaji": "imasu", "english": "there is / be staying", "note": "Polite form of いる for people and animals, or for staying/waiting somewhere.", "terms": ["いる", "iru", "います", "imasu"]}, {"japanese": "する", "kana": "する", "romaji": "suru", "english": "to do / make into", "note": "Super common irregular verb. It combines with many nouns: 勉強する, 確認する, 電話する.", "terms": ["します", "しました", "しましょう", "しよう", "しない", "して", "し", "suru", "shimasu", "shimashita", "shimashou", "shiyou", "shinai", "shite", "shi"]}, {"japanese": "て", "kana": "て", "romaji": "te", "english": "and / do and... / request connector", "note": "The te-form connector. It links actions, makes requests with ください, and creates ongoing forms like しています.", "terms": ["て", "te"]}, {"japanese": "た", "kana": "た", "romaji": "ta", "english": "past/plain completed ending", "note": "Plain past or completed-action ending. It often means did/was/happened depending on the verb or adjective.", "terms": ["た", "ta"]}, {"japanese": "ない", "kana": "ない", "romaji": "nai", "english": "not / there is no", "note": "Plain negative. After verbs it means do not; after ある it means does not exist; after nouns with じゃ it means is not.", "terms": ["ない", "nai"]}, {"japanese": "ん", "kana": "ん", "romaji": "n", "english": "explanatory contraction", "note": "Spoken contraction of の in explanatory endings like んです, なんだ, どうしたの.", "terms": ["ん", "n"]}, {"japanese": "ば", "kana": "ば", "romaji": "ba", "english": "if / when possible", "note": "Conditional ending. In できれば it means if possible.", "terms": ["ば", "ba", "できれば", "dekireba"]}, {"japanese": "な", "kana": "な", "romaji": "na", "english": "casual sentence ending / linker", "note": "Can be a sentence-ending feeling marker, a na-adjective linker, or part of fixed phrases. Meaning depends heavily on grammar.", "terms": ["な", "na"]}, {"japanese": "ございます", "kana": "ございます", "romaji": "gozaimasu", "english": "polite exists / polite ending", "note": "Very polite form related to ある. Common in greetings and set phrases like ありがとうございます.", "terms": ["ござる", "ございます", "gozaimasu"]}, {"japanese": "願い", "kana": "ねがい", "romaji": "negai", "english": "request / wish", "note": "Usually seen inside お願いします, where it means a request rather than a literal wish.", "terms": ["お願い", "お願いします", "negai", "onegai"]}, {"japanese": "いい", "kana": "いい", "romaji": "ii", "english": "good / okay / fine / no need", "note": "Very flexible. Can mean good, permitted, enough, or 'I'm good/no thanks' depending on context.", "terms": ["よい", "ii", "yoi"]}, {"japanese": "この", "kana": "この", "romaji": "kono", "english": "this ...", "note": "Pre-noun this. Use この before a noun: この店, この画面.", "terms": ["kono"]}, {"japanese": "その", "kana": "その", "romaji": "sono", "english": "that ... / your ...", "note": "Pre-noun that. Often points to something near the listener or already mentioned.", "terms": ["sono"]}, {"japanese": "あの", "kana": "あの", "romaji": "ano", "english": "that ... over there / um", "note": "Before a noun it means that over there; alone it can be a soft attention-getter like um/excuse me.", "terms": ["ano"]}, {"japanese": "これ", "kana": "これ", "romaji": "kore", "english": "this", "note": "Standalone this. Use この before a noun, これ by itself.", "terms": ["kore"]}, {"japanese": "それ", "kana": "それ", "romaji": "sore", "english": "that", "note": "Standalone that. Often points to something the listener said or something already in the conversation.", "terms": ["sore"]}, {"japanese": "あれ", "kana": "あれ", "romaji": "are", "english": "that over there / huh?", "note": "Can point to something away from both people, or be a reaction like 'huh?' in speech.", "terms": ["are"]}, {"japanese": "ここ", "kana": "ここ", "romaji": "koko", "english": "here", "note": "This place, near the speaker.", "terms": ["koko"]}, {"japanese": "そこ", "kana": "そこ", "romaji": "soko", "english": "there", "note": "That place, usually near the listener or already mentioned.", "terms": ["soko"]}, {"japanese": "こちら", "kana": "こちら", "romaji": "kochira", "english": "this way / this side / this person", "note": "Polite version of here/this side; also used in service speech and introductions.", "terms": ["kochira"]}, {"japanese": "私", "kana": "わたし", "romaji": "watashi", "english": "I / me", "note": "Safe default first-person pronoun. Often omitted when context is clear.", "terms": ["私", "わたし", "watashi", "watakushi"]}, {"japanese": "あなた", "kana": "あなた", "romaji": "anata", "english": "you", "note": "Grammatically 'you,' but often avoided in real conversation unless intimate, generic, or needed for clarity.", "terms": ["anata"]}, {"japanese": "君", "kana": "きみ", "romaji": "kimi", "english": "you", "note": "Casual/intimate 'you.' Can sound romantic, superior, or anime-like depending on context.", "terms": ["kimi"]}, {"japanese": "人", "kana": "ひと", "romaji": "hito", "english": "person", "note": "General word for person. With の it can mean someone's person/partner depending on context.", "terms": ["hito"]}, {"japanese": "ニック", "kana": "にっく", "romaji": "nikku", "english": "Nick", "note": "Katakana rendering of the name Nick.", "terms": ["nikku"]}, {"japanese": "日本語", "kana": "にほんご", "romaji": "nihongo", "english": "Japanese language", "note": "The language. 日本 means Japan; 語 means language.", "terms": ["nihongo"]}, {"japanese": "日本", "kana": "にほん", "romaji": "nihon", "english": "Japan", "note": "Conversational default reading is にほん / nihon. にっぽん / nippon appears in formal names and slogans.", "terms": ["nihon", "nippon"]}, {"japanese": "英語", "kana": "えいご", "romaji": "eigo", "english": "English language", "note": "The language English. Use 英語で for 'in English.'", "terms": ["eigo"]}, {"japanese": "名前", "kana": "なまえ", "romaji": "namae", "english": "name", "note": "Plain word for name. Polite form often uses お名前.", "terms": ["namae", "onamae"]}, {"japanese": "少し", "kana": "すこし", "romaji": "sukoshi", "english": "a little", "note": "A little in amount, time, ability, or degree. Softer than saying a lot.", "terms": ["sukoshi"]}, {"japanese": "また", "kana": "また", "romaji": "mata", "english": "again / also / see you", "note": "Means again or also. In greetings, またね means see you again/later.", "terms": ["mata"]}, {"japanese": "後", "kana": "あと", "romaji": "ato", "english": "after / later / behind", "note": "Time after/later or physical behind. 後で means later.", "terms": ["あと", "後で", "ato", "ato de"]}, {"japanese": "今度", "kana": "こんど", "romaji": "kondo", "english": "next time / another time / this coming time", "note": "Can mean next time, sometime soon, or another time depending on context.", "terms": ["kondo"]}, {"japanese": "最近", "kana": "さいきん", "romaji": "saikin", "english": "recently / these days", "note": "Useful for small talk: 最近どう means how have things been lately?", "terms": ["saikin"]}, {"japanese": "時間", "kana": "じかん", "romaji": "jikan", "english": "time / hours", "note": "Can mean time as availability or duration/hours.", "terms": ["jikan"]}, {"japanese": "雨", "kana": "あめ", "romaji": "ame", "english": "rain", "note": "Noun for rain. 雨です means it is raining.", "terms": ["ame"]}, {"japanese": "傘", "kana": "かさ", "romaji": "kasa", "english": "umbrella", "note": "Common daily word. 傘がありますか asks if an umbrella is available.", "terms": ["kasa"]}, {"japanese": "天気", "kana": "てんき", "romaji": "tenki", "english": "weather", "note": "Weather or weather condition. いい天気 means nice weather.", "terms": ["tenki"]}, {"japanese": "気", "kana": "き", "romaji": "ki", "english": "mind / spirit / feeling", "note": "A core idea behind many phrases: 気をつける, 気になる, 気がする. English usually needs a phrase.", "terms": ["ki"]}, {"japanese": "気持ち", "kana": "きもち", "romaji": "kimochi", "english": "feeling / physical sensation", "note": "Can be emotional feeling or bodily sensation. 気持ち悪い means nauseous/gross-feeling.", "terms": ["kimochi"]}, {"japanese": "好き", "kana": "すき", "romaji": "suki", "english": "like / fond of", "note": "Na-adjective, not a verb. The liked thing usually takes が.", "terms": ["suki"]}, {"japanese": "嫌い", "kana": "きらい", "romaji": "kirai", "english": "dislike / hate", "note": "Na-adjective. Can sound strong, so soften if needed.", "terms": ["kirai"]}, {"japanese": "無理", "kana": "むり", "romaji": "muri", "english": "impossible / too much", "note": "Can mean impossible, unreasonable, or 'I can't handle that.'", "terms": ["muri"]}, {"japanese": "本当", "kana": "ほんとう", "romaji": "hontou", "english": "truth / real / really", "note": "Often used as 本当？ for really? and 本当に for really/very.", "terms": ["hontou", "hontou ni"]}, {"japanese": "大事", "kana": "だいじ", "romaji": "daiji", "english": "important / precious", "note": "Na-adjective for important, valuable, or something to take care of.", "terms": ["daiji"]}, {"japanese": "心配", "kana": "しんぱい", "romaji": "shinpai", "english": "worry / concern", "note": "Noun/na-adjective. 心配です means I am worried; 心配しないで means don't worry.", "terms": ["shinpai"]}, {"japanese": "問題", "kana": "もんだい", "romaji": "mondai", "english": "problem / issue", "note": "問題ない means no problem. 問題ではない means it is not the issue.", "terms": ["mondai"]}, {"japanese": "意味", "kana": "いみ", "romaji": "imi", "english": "meaning", "note": "Used in どういう意味ですか: what does this mean?", "terms": ["imi"]}, {"japanese": "こと", "kana": "こと", "romaji": "koto", "english": "thing / matter / about", "note": "Abstract thing, matter, or fact. In あなたのこと it means 'you as a person / about you.'", "terms": ["koto"]}, {"japanese": "もの", "kana": "もの", "romaji": "mono", "english": "thing / stuff", "note": "Concrete thing or category of things, as in 甘いもの sweet things.", "terms": ["mono"]}, {"japanese": "話", "kana": "はなし", "romaji": "hanashi", "english": "talk / story / topic", "note": "Can mean a story, conversation, or topic being discussed.", "terms": ["hanashi"]}, {"japanese": "案", "kana": "あん", "romaji": "an", "english": "idea / proposal", "note": "A plan, proposal, or idea under discussion.", "terms": ["an"]}, {"japanese": "見せる", "kana": "みせる", "romaji": "miseru", "english": "to show / let someone see", "note": "The verb for showing something. 見せて means show me / please show, while 見せます means I show / will show.", "terms": ["見せ", "見せて", "見せます", "みせ", "みせて", "mise", "misete", "misemasu", "miseru", "mise ru"]}, {"japanese": "店", "kana": "みせ", "romaji": "mise", "english": "shop / restaurant", "note": "General shop/store; can also refer to a restaurant or place of business. Same romaji as the 見せ stem, but different kanji and meaning.", "terms": ["mise"]}, {"japanese": "服", "kana": "ふく", "romaji": "fuku", "english": "clothes", "note": "General word for clothes. Outfit can also be コーデ or 服装 depending context.", "terms": ["fuku"]}, {"japanese": "映画", "kana": "えいが", "romaji": "eiga", "english": "movie / film", "note": "Common word for movie or film.", "terms": ["eiga"]}, {"japanese": "写真", "kana": "しゃしん", "romaji": "shashin", "english": "photo", "note": "写真を撮る means take a photo.", "terms": ["shashin"]}, {"japanese": "電話", "kana": "でんわ", "romaji": "denwa", "english": "phone / call", "note": "Can be the phone device or a phone call. 電話する means to call.", "terms": ["denwa"]}, {"japanese": "トイレ", "kana": "といれ", "romaji": "toire", "english": "restroom / toilet", "note": "Common practical word for restroom/toilet.", "terms": ["toire"]}, {"japanese": "京都", "kana": "きょうと", "romaji": "kyouto", "english": "Kyoto", "note": "City name. Often used in travel examples.", "terms": ["kyouto"]}, {"japanese": "東京", "kana": "とうきょう", "romaji": "toukyou", "english": "Tokyo", "note": "City name. 東京に行く means go to Tokyo.", "terms": ["toukyou"]}, {"japanese": "夢", "kana": "ゆめ", "romaji": "yume", "english": "dream", "note": "Dream while sleeping or dream/ambition depending context.", "terms": ["yume"]}, {"japanese": "日", "kana": "ひ", "romaji": "hi", "english": "day / sun", "note": "In examples like いい日, it means day.", "terms": ["hi"]}, {"japanese": "一緒", "kana": "いっしょ", "romaji": "issho", "english": "together", "note": "Often used with に: 一緒に means together.", "terms": ["issho", "issho ni"]}, {"japanese": "お願いします", "kana": "おねがいします", "romaji": "onegaishimasu", "english": "please / I request it", "note": "Polite request phrase. Often not translated literally.", "terms": ["願い", "お願い", "お願いします", "onegaishimasu"]}, {"japanese": "失礼", "kana": "しつれい", "romaji": "shitsurei", "english": "rudeness / excuse me", "note": "Inside 失礼します it means excuse me or pardon the intrusion.", "terms": ["shitsurei"]}, {"japanese": "一度", "kana": "いちど", "romaji": "ichido", "english": "one time / once", "note": "もう一度 means one more time.", "terms": ["ichido"]}, {"japanese": "先", "kana": "さき", "romaji": "saki", "english": "ahead / first / earlier", "note": "In お先に or 先に, it means first/ahead of someone.", "terms": ["saki"]}, {"japanese": "さま", "kana": "さま", "romaji": "sama", "english": "honorific suffix", "note": "Respectful suffix after names/titles, also part of set phrases like ごちそうさま.", "terms": ["様", "sama"]}, {"japanese": "ご", "kana": "ご", "romaji": "go", "english": "honorific prefix", "note": "Polite prefix before many Sino-Japanese nouns: ご確認, ご迷惑.", "terms": ["go", "お"]}, {"japanese": "申し訳", "kana": "もうしわけ", "romaji": "moushiwake", "english": "excuse / apology reason", "note": "Used almost only in apology phrases like 申し訳ありません.", "terms": ["moushiwake"]}, {"japanese": "迷惑", "kana": "めいわく", "romaji": "meiwaku", "english": "trouble / inconvenience", "note": "ご迷惑をおかけする means to cause someone trouble.", "terms": ["meiwaku"]}, {"japanese": "邪魔", "kana": "じゃま", "romaji": "jama", "english": "disturbance / intrusion", "note": "お邪魔します is a set phrase when entering someone's space.", "terms": ["お邪魔", "ojama", "jama"]}, {"japanese": "家", "kana": "いえ", "romaji": "ie", "english": "house / home", "note": "Home/house. 家に着く means arrive home.", "terms": ["ie", "uchi"]}, {"japanese": "ごちそう", "kana": "ごちそう", "romaji": "gochisou", "english": "feast / meal treat", "note": "Part of ごちそうさまでした, the after-meal thanks.", "terms": ["gochisou", "gochisousama"]}, {"japanese": "対応", "kana": "たいおう", "romaji": "taiou", "english": "handle / respond to", "note": "Workplace noun/する-verb for handling an issue or responding.", "terms": ["taiou", "対応します", "taiou shimasu"]}, {"japanese": "確認", "kana": "かくにん", "romaji": "kakunin", "english": "check / confirm", "note": "Noun/する-verb. 確認します means I will check/confirm.", "terms": ["kakunin", "確認します", "kakunin shimasu"]}, {"japanese": "連絡", "kana": "れんらく", "romaji": "renraku", "english": "contact / message", "note": "Noun/する-verb for contacting someone or getting in touch.", "terms": ["renraku", "連絡する", "連絡します"]}, {"japanese": "資料", "kana": "しりょう", "romaji": "shiryou", "english": "materials / documents", "note": "Work/school materials, handouts, or documents.", "terms": ["shiryou"]}, {"japanese": "予約", "kana": "よやく", "romaji": "yoyaku", "english": "reservation / booking", "note": "Noun/する-verb for reservations and bookings.", "terms": ["yoyaku"]}, {"japanese": "会計", "kana": "かいけい", "romaji": "kaikei", "english": "bill / checkout / accounting", "note": "In restaurants/shops, 会計 means the bill or checkout.", "terms": ["kaikei"]}, {"japanese": "駅", "kana": "えき", "romaji": "eki", "english": "station", "note": "Train/subway station.", "terms": ["eki"]}, {"japanese": "電車", "kana": "でんしゃ", "romaji": "densha", "english": "train", "note": "Common word for train.", "terms": ["densha"]}, {"japanese": "来週", "kana": "らいしゅう", "romaji": "raishuu", "english": "next week", "note": "The week after this one.", "terms": ["raishuu"]}, {"japanese": "晩ご飯", "kana": "ばんごはん", "romaji": "ban gohan", "english": "dinner", "note": "Evening meal. Also commonly 夜ご飯.", "terms": ["bangohan", "ban gohan"]}, {"japanese": "寝る", "kana": "ねる", "romaji": "neru", "english": "to sleep / go to bed", "note": "Verb for sleeping or going to bed.", "terms": ["寝た", "寝ます", "neru", "neta"]}, {"japanese": "なる", "kana": "なる", "romaji": "naru", "english": "to become", "note": "Used for changes of state: 遅くなる, お世話になる.", "terms": ["なりました", "なり", "naru", "narimashita"]}, {"japanese": "できる", "kana": "できる", "romaji": "dekiru", "english": "can do / be ready", "note": "Means can do, be possible, or be ready/finished depending context.", "terms": ["できます", "できてる", "できれば", "dekiru", "dekimasu", "dekiteru", "dekireba"]}, {"japanese": "送る", "kana": "おくる", "romaji": "okuru", "english": "to send", "note": "Send a message, photo, document, or sometimes walk/drive someone somewhere.", "terms": ["送ります", "送りました", "送って", "okuru", "okurimasu", "okurimashita"]}, {"japanese": "待つ", "kana": "まつ", "romaji": "matsu", "english": "to wait", "note": "Te-form 待って is common in requests like wait a second.", "terms": ["待って", "待ち", "待っています", "matsu", "matte", "machi"]}, {"japanese": "座る", "kana": "すわる", "romaji": "suwaru", "english": "to sit", "note": "Te-form 座って appears in sit down requests.", "terms": ["座って", "suwaru", "suwatte"]}, {"japanese": "話す", "kana": "はなす", "romaji": "hanasu", "english": "to speak / talk", "note": "Verb for speaking/talking. 話せます means can speak.", "terms": ["話せます", "話して", "hanasu", "hanasemasu"]}, {"japanese": "勉強", "kana": "べんきょう", "romaji": "benkyou", "english": "study", "note": "Noun/する-verb. 勉強しています means I am studying.", "terms": ["benkyou", "勉強しています"]}, {"japanese": "考える", "kana": "かんがえる", "romaji": "kangaeru", "english": "to think / consider", "note": "Used for thinking something over.", "terms": ["考えます", "kangaeru", "kangaemasu"]}, {"japanese": "思う", "kana": "おもう", "romaji": "omou", "english": "to think / feel", "note": "Used for opinions and impressions: と思います.", "terms": ["思います", "思う", "omou", "omoimasu"]}, {"japanese": "分かる", "kana": "わかる", "romaji": "wakaru", "english": "to understand / know", "note": "Can mean understand or know. 分かったら means when/if you know.", "terms": ["分かったら", "分かります", "wakaru", "wakattara"]}, {"japanese": "知る", "kana": "しる", "romaji": "shiru", "english": "to know", "note": "Usually appears as 知っている, 知らない, 知らなかった.", "terms": ["知らなかった", "知らない", "shiru", "shiranakatta"]}, {"japanese": "食べる", "kana": "たべる", "romaji": "taberu", "english": "to eat", "note": "Verb for eating. 食べて is te-form.", "terms": ["食べ", "食べて", "食べます", "taberu", "tabete"]}, {"japanese": "飲む", "kana": "のむ", "romaji": "nomu", "english": "to drink", "note": "Verb for drinking.", "terms": ["飲みます", "飲みたい", "nomu", "nomimasu", "nomitai"]}, {"japanese": "見る", "kana": "みる", "romaji": "miru", "english": "to see / watch / look", "note": "Verb for seeing, watching, or looking.", "terms": ["見ます", "見たい", "見る", "miru", "mitai"]}, {"japanese": "行く", "kana": "いく", "romaji": "iku", "english": "to go", "note": "Verb for going. 行きます is polite.", "terms": ["行きます", "行こう", "行った", "iku", "ikimasu", "ikou"]}, {"japanese": "来る", "kana": "くる", "romaji": "kuru", "english": "to come", "note": "Irregular verb. 来た means came.", "terms": ["来た", "来て", "来ます", "kuru", "kita", "kite"]}, {"japanese": "帰る", "kana": "かえる", "romaji": "kaeru", "english": "to go home / return", "note": "Used for returning home or going back.", "terms": ["帰って", "帰ります", "kaeru", "kaette"]}, {"japanese": "使う", "kana": "つかう", "romaji": "tsukau", "english": "to use", "note": "Verb for using tools, language, apps, etc.", "terms": ["使います", "使って", "tsukau", "tsukaimasu"]}, {"japanese": "始める", "kana": "はじめる", "romaji": "hajimeru", "english": "to start", "note": "始めましょう means let's start.", "terms": ["始めましょう", "hajimeru", "hajimemashou"]}, {"japanese": "助かる", "kana": "たすかる", "romaji": "tasukaru", "english": "to be helped / be saved", "note": "助かります means that helps me / I appreciate it.", "terms": ["助かります", "助かった", "tasukaru", "tasukarimasu"]}, {"japanese": "手伝う", "kana": "てつだう", "romaji": "tetsudau", "english": "to help", "note": "Verb for helping with a task.", "terms": ["手伝って", "手伝ってくれる", "tetsudau", "tetsudatte"]}, {"japanese": "着く", "kana": "つく", "romaji": "tsuku", "english": "to arrive", "note": "家に着く means arrive home.", "terms": ["着いたら", "着きます", "tsuku", "tsuitara"]}, {"japanese": "守る", "kana": "まもる", "romaji": "mamoru", "english": "to protect", "note": "Verb for protecting someone or something.", "terms": ["守りたい", "mamoru", "mamoritai"]}, {"japanese": "高い", "kana": "たかい", "romaji": "takai", "english": "expensive / tall", "note": "For prices it means expensive; for height it means tall/high.", "terms": ["takai"]}, {"japanese": "安い", "kana": "やすい", "romaji": "yasui", "english": "cheap / inexpensive", "note": "Price is low. Can be neutral or positive depending context.", "terms": ["yasui"]}, {"japanese": "近い", "kana": "ちかい", "romaji": "chikai", "english": "near / close", "note": "Physical closeness or sometimes relationship closeness.", "terms": ["chikai"]}, {"japanese": "早い", "kana": "はやい", "romaji": "hayai", "english": "early / fast", "note": "Early in time or fast in speed depending context.", "terms": ["hayai"]}, {"japanese": "遅い", "kana": "おそい", "romaji": "osoi", "english": "late / slow", "note": "Late in time or slow in speed depending context.", "terms": ["遅く", "osoi", "osoku"]}, {"japanese": "楽しい", "kana": "たのしい", "romaji": "tanoshii", "english": "fun / enjoyable", "note": "Positive enjoyable feeling.", "terms": ["tanoshii"]}, {"japanese": "悲しい", "kana": "かなしい", "romaji": "kanashii", "english": "sad", "note": "Plain adjective for sadness.", "terms": ["kanashii"]}, {"japanese": "眠い", "kana": "ねむい", "romaji": "nemui", "english": "sleepy", "note": "Feeling sleepy.", "terms": ["nemui"]}, {"japanese": "おいしい", "kana": "おいしい", "romaji": "oishii", "english": "tasty / delicious", "note": "Common food compliment.", "terms": ["おいし", "oishii", "oishi"]}, {"japanese": "かわいい", "kana": "かわいい", "romaji": "kawaii", "english": "cute", "note": "Cute, charming, or endearing.", "terms": ["kawaii"]}, {"japanese": "かっこいい", "kana": "かっこいい", "romaji": "kakkoii", "english": "cool / good-looking", "note": "Cool-looking, stylish, or attractive.", "terms": ["kakkoii"]}, {"japanese": "きれい", "kana": "きれい", "romaji": "kirei", "english": "pretty / clean", "note": "Na-adjective meaning pretty/beautiful or clean depending context.", "terms": ["kirei"]}, {"japanese": "便利", "kana": "べんり", "romaji": "benri", "english": "convenient / handy", "note": "Na-adjective for useful/convenient.", "terms": ["benri"]}, {"japanese": "変", "kana": "へん", "romaji": "hen", "english": "strange / odd", "note": "Na-adjective for weird, strange, or off.", "terms": ["hen"]}, {"japanese": "甘い", "kana": "あまい", "romaji": "amai", "english": "sweet", "note": "Sweet taste, or figuratively lenient/naive depending context.", "terms": ["amai"]}, {"japanese": "辛い", "kana": "からい", "romaji": "karai", "english": "spicy / hot", "note": "Spicy hot, not temperature hot.", "terms": ["karai"]}, {"japanese": "悪い", "kana": "わるい", "romaji": "warui", "english": "bad / poor", "note": "Bad, wrong, or unwell depending context.", "terms": ["warui"]}, {"japanese": "ゆっくり", "kana": "ゆっくり", "romaji": "yukkuri", "english": "slowly / take it easy", "note": "Adverb for doing something slowly or unhurriedly.", "terms": ["yukkuri"]}, {"japanese": "もっと", "kana": "もっと", "romaji": "motto", "english": "more", "note": "More in amount, degree, or time.", "terms": ["motto"]}, {"japanese": "たしか", "kana": "たしか", "romaji": "tashika", "english": "if I remember right / sure", "note": "In たしかに it means certainly/true; alone it can mean if I remember correctly.", "terms": ["たしかに", "tashika", "tashika ni"]}, {"japanese": "どういう", "kana": "どういう", "romaji": "dou iu", "english": "what kind of / what do you mean", "note": "Used to ask for meaning or explanation: どういうこと, どういう意味.", "terms": ["douiu", "dou iu"]}, {"japanese": "そんな", "kana": "そんな", "romaji": "sonna", "english": "that kind of / such", "note": "Pre-noun or phrase modifier. そんなこと means that kind of thing.", "terms": ["sonna"]}, {"japanese": "別", "kana": "べつ", "romaji": "betsu", "english": "separate / particular", "note": "In 別に, it means not particularly / not really.", "terms": ["betsu"]}, {"japanese": "そう", "kana": "そう", "romaji": "sou", "english": "so / that way / right", "note": "A high-frequency pointer to a state or idea: that's so, like that, right. Meaning depends on the phrase around it.", "terms": ["sou"]}, {"japanese": "なん", "kana": "なん", "romaji": "nan", "english": "what / something", "note": "Conversational form of 何 in many compounds: なんでも, なんか, なんて.", "terms": ["nan", "nani"]}, {"japanese": "いう", "kana": "いう", "romaji": "iu", "english": "to say / be called", "note": "Verb behind 言う and patterns like という, っていう, どういう.", "terms": ["言う", "iu", "to iu", "tte iu"]}, {"japanese": "つける", "kana": "つける", "romaji": "tsukeru", "english": "to attach / put on / take care in phrase", "note": "Literal meaning is attach/put on; in 気をつけて it means take care / be careful.", "terms": ["つけ", "気をつけて", "tsukeru", "tsuke"]}, {"japanese": "くらい", "kana": "くらい", "romaji": "kurai", "english": "about / around / to the extent", "note": "Approximation or degree marker. Same family as ぐらい.", "terms": ["ぐらい", "kurai", "gurai"]}, {"japanese": "こそ", "kana": "こそ", "romaji": "koso", "english": "exactly / precisely / emphatic too", "note": "Emphasizes the marked thing. こちらこそ means rather, I should say that to you.", "terms": ["koso"]}, {"japanese": "調子", "kana": "ちょうし", "romaji": "choushi", "english": "condition / how things are going", "note": "Used for health, machine condition, or general mood: 調子どう?", "terms": ["choushi"]}, {"japanese": "くれる", "kana": "くれる", "romaji": "kureru", "english": "to give me/us / do for me", "note": "Helper verb showing someone does something for the speaker's side.", "terms": ["kureru", "くれると"]}, {"japanese": "お世話", "kana": "おせわ", "romaji": "osewa", "english": "care / support / help received", "note": "Set business/social phrase material: お世話になります thanks someone for ongoing support.", "terms": ["osewa", "お世話になります"]}, {"japanese": "少々", "kana": "しょうしょう", "romaji": "shoushou", "english": "a little / a moment", "note": "Polite-service style 'a little.' Common in 少々お待ちください.", "terms": ["shoushou"]}, {"japanese": "かける", "kana": "かける", "romaji": "kakeru", "english": "to cause / put on / hang / call", "note": "Very flexible verb. In ご迷惑をおかけする it means to cause trouble/inconvenience.", "terms": ["かけ", "kakeru", "kake"]}, {"japanese": "かもしれません", "kana": "かもしれません", "romaji": "kamoshiremasen", "english": "might / may", "note": "Polite uncertainty pattern. Casual short form is かも.", "terms": ["しれません", "かもしれない", "kamoshiremasen", "shiremasen"]}, {"japanese": "無事", "kana": "ぶじ", "romaji": "buji", "english": "safe / without incident", "note": "Means safe, unharmed, or completed without trouble.", "terms": ["buji"]}, {"japanese": "間に合う", "kana": "まにあう", "romaji": "maniau", "english": "to make it in time", "note": "Used when arriving/completing before a deadline.", "terms": ["間に合って", "間に合いました", "maniau", "maniatte"]}, {"japanese": "音", "kana": "おと", "romaji": "oto", "english": "sound", "note": "A sound/noise. 音がしない means there is no sound.", "terms": ["oto"]}, {"japanese": "画面", "kana": "がめん", "romaji": "gamen", "english": "screen", "note": "Screen of a phone, app, computer, or display.", "terms": ["gamen"]}, {"japanese": "味", "kana": "あじ", "romaji": "aji", "english": "taste / flavor", "note": "Flavor or taste of food/drink.", "terms": ["aji"]}, {"japanese": "どの", "kana": "どの", "romaji": "dono", "english": "which ...", "note": "Question word before a noun or in fixed forms like どのくらい.", "terms": ["dono"]}, {"japanese": "やる", "kana": "やる", "romaji": "yaru", "english": "to do / give / try", "note": "Casual verb for doing. Can sound rough in polite contexts.", "terms": ["やって", "やりたい", "yaru", "yatte"]}, {"japanese": "使える", "kana": "つかえる", "romaji": "tsukaeru", "english": "can use / usable", "note": "Potential form of 使う. カード使えますか asks if card payment is usable.", "terms": ["使えます", "tsukaeru", "tsukaemasu"]}, {"japanese": "一つ", "kana": "ひとつ", "romaji": "hitotsu", "english": "one thing / one item", "note": "General counter for one item or one abstract thing.", "terms": ["つ", "一つ", "hitotsu"]}, {"japanese": "メニュー", "kana": "めにゅー", "romaji": "menyuu", "english": "menu", "note": "Restaurant menu or app menu depending context.", "terms": ["menyuu", "menu"]}, {"japanese": "教える", "kana": "おしえる", "romaji": "oshieru", "english": "to tell / teach", "note": "Used for teaching or telling information/directions.", "terms": ["教え", "教えて", "oshieru", "oshiete"]}, {"japanese": "書く", "kana": "かく", "romaji": "kaku", "english": "to write", "note": "Verb for writing. 書いてください means please write it.", "terms": ["書い", "書いて", "kaku", "kaite"]}, {"japanese": "ペン", "kana": "ぺん", "romaji": "pen", "english": "pen", "note": "Writing pen.", "terms": ["pen"]}, {"japanese": "そろそろ", "kana": "そろそろ", "romaji": "sorosoro", "english": "soon / about time", "note": "Signals that it is about time to do something.", "terms": ["sorosoro"]}, {"japanese": "荷物", "kana": "にもつ", "romaji": "nimotsu", "english": "luggage / bags", "note": "Baggage, luggage, or carried belongings.", "terms": ["nimotsu"]}, {"japanese": "別々", "kana": "べつべつ", "romaji": "betsu betsu", "english": "separately", "note": "Separate bills, separate actions, or separate items.", "terms": ["betsubetsu", "betsu betsu"]}, {"japanese": "お腹", "kana": "おなか", "romaji": "onaka", "english": "stomach / belly", "note": "Used for hunger/fullness: お腹がすいた, お腹いっぱい.", "terms": ["onaka"]}, {"japanese": "漢字", "kana": "かんじ", "romaji": "kanji", "english": "kanji / Chinese characters", "note": "The logographic characters used in Japanese writing.", "terms": ["kanji"]}, {"japanese": "アプリ", "kana": "あぷり", "romaji": "apuri", "english": "app", "note": "Phone/computer application.", "terms": ["apuri"]}, {"japanese": "助ける", "kana": "たすける", "romaji": "tasukeru", "english": "to help / save", "note": "Stronger rescue/help verb. 助けてください means please help me.", "terms": ["助け", "助けて", "tasukeru", "tasukete"]}, {"japanese": "茶", "kana": "ちゃ", "romaji": "cha", "english": "tea", "note": "Tea. Often appears as お茶.", "terms": ["お茶", "ocha", "cha"]}, {"japanese": "ポイント", "kana": "ぽいんと", "romaji": "pointo", "english": "points / loyalty points", "note": "Loanword for points, especially store loyalty points.", "terms": ["pointo"]}, {"japanese": "払う", "kana": "はらう", "romaji": "harau", "english": "to pay", "note": "Verb for paying money.", "terms": ["払います", "harau", "haraimasu"]}, {"japanese": "小さい", "kana": "ちいさい", "romaji": "chiisai", "english": "small / little", "note": "Small in size. 小さいこと means little things.", "terms": ["chiisai"]}, {"japanese": "降りる", "kana": "おりる", "romaji": "oriru", "english": "to get off", "note": "Get off a train, bus, taxi, or elevator.", "terms": ["降ります", "oriru", "orimasu"]}, {"japanese": "曲がる", "kana": "まがる", "romaji": "magaru", "english": "to turn / bend", "note": "Used in directions: 右に曲がってください.", "terms": ["曲がって", "magaru", "magatte"]}, {"japanese": "Wi-Fi", "kana": "わいふぁい", "romaji": "waifai", "english": "Wi-Fi", "note": "Wireless internet connection.", "terms": ["wifi", "wi-fi", "waifai"]}, {"japanese": "感じ", "kana": "かんじ", "romaji": "kanji", "english": "feeling / vibe", "note": "A sense, impression, or vibe. Different from 漢字 even though the romaji can match.", "terms": ["kanji", "tte kanji"]}, {"japanese": "時", "kana": "とき", "romaji": "toki", "english": "time / when", "note": "Time or when-clause marker: つらい時 means when things are hard.", "terms": ["toki"]}, {"japanese": "付き合う", "kana": "つきあう", "romaji": "tsukiau", "english": "to date / keep company", "note": "Can mean date romantically or accompany/socialize depending context.", "terms": ["付き合って", "付き合っています", "tsukiau", "tsukiatte"]}, {"japanese": "会う", "kana": "あう", "romaji": "au", "english": "to meet / see someone", "note": "Meet or see a person. 会いたい means want to see/meet.", "terms": ["会います", "会いたい", "会いましょう", "会い", "au", "aimasu", "aitai", "aimashou"]}, {"japanese": "ずっと", "kana": "ずっと", "romaji": "zutto", "english": "all along / continuously / much more", "note": "Long continuous time or stronger comparison depending context.", "terms": ["zutto"]}, {"japanese": "すぎる", "kana": "すぎる", "romaji": "sugiru", "english": "too much / too ...", "note": "After adjectives/verbs, means too much or excessively.", "terms": ["過ぎる", "sugiru"]}, {"japanese": "共有", "kana": "きょうゆう", "romaji": "kyouyuu", "english": "share / sharing", "note": "Workplace word for sharing documents or information.", "terms": ["kyouyuu", "共有します"]}, {"japanese": "体調", "kana": "たいちょう", "romaji": "taichou", "english": "physical condition / health", "note": "Your health/condition that day. 体調が悪い means feel unwell.", "terms": ["taichou"]}, {"japanese": "参加", "kana": "さんか", "romaji": "sanka", "english": "participation / join", "note": "Noun/する-verb for joining a meeting/event.", "terms": ["sanka", "参加します"]}, {"japanese": "聞く", "kana": "きく", "romaji": "kiku", "english": "to listen / ask", "note": "Can mean listen/hear or ask a question depending context.", "terms": ["聞き", "聞いて", "kiku", "kiite"]}, {"japanese": "猫", "kana": "ねこ", "romaji": "neko", "english": "cat", "note": "Cat.", "terms": ["neko"]}, {"japanese": "歩く", "kana": "あるく", "romaji": "aruku", "english": "to walk", "note": "Verb for walking.", "terms": ["歩きます", "aruku", "arukimasu"]}, {"japanese": "千", "kana": "せん", "romaji": "sen", "english": "thousand", "note": "Number 1000.", "terms": ["sen"]}, {"japanese": "円", "kana": "えん", "romaji": "en", "english": "yen", "note": "Japanese currency unit.", "terms": ["en", "yen"]}, {"japanese": "よう", "kana": "よう", "romaji": "you", "english": "like / so that / way", "note": "Grammar noun-like piece in ような and ように. Think 'manner/appearance/so that.'", "terms": ["you", "you na", "you ni"]}, {"japanese": "食べすぎる", "kana": "たべすぎる", "romaji": "tabesugiru", "english": "to eat too much", "note": "食べる plus すぎる, meaning overeat.", "terms": ["食べすぎました", "tabe sugiru", "tabesugiru", "tabesugimashita"]}, {"japanese": "同じ", "kana": "おなじ", "romaji": "onaji", "english": "same", "note": "Same or identical.", "terms": ["onaji"]}];
     const STORAGE_KEYS = {
       custom: "jp-handbook-custom-v1",
-      favorites: "jp-handbook-favorites-v1"
+      favorites: "jp-handbook-favorites-v1",
+      theme: "jp-handbook-theme-v1"
     };
+    const THEME_LABELS = {
+      system: "Theme: System",
+      dark: "Theme: Dark",
+      light: "Theme: Light"
+    };
+    const THEME_ORDER = ["system", "dark", "light"];
     const REQUIRED_FIELDS = ["id", "category", "japanese", "kana", "romaji", "english", "tone", "quirks", "example", "exampleEnglish", "exampleNotes", "relatedEntryIds", "source", "isCustom"];
     const INITIAL_VISIBLE_LIMIT = 120;
     const VISIBLE_STEP = 120;
@@ -1278,7 +1412,8 @@
       spotlightId: "",
       editingId: "",
       customEntries: loadJson(STORAGE_KEYS.custom, []),
-      favorites: new Set(loadJson(STORAGE_KEYS.favorites, []))
+      favorites: new Set(loadJson(STORAGE_KEYS.favorites, [])),
+      theme: loadStoredTheme()
     };
     const runtime = {
       entryCache: null,
@@ -1298,6 +1433,7 @@
       mineToggle: document.getElementById("mineToggle"),
       favToggle: document.getElementById("favToggle"),
       expandToggle: document.getElementById("expandToggle"),
+      themeToggle: document.getElementById("themeToggle"),
       statBuilt: document.getElementById("statBuilt"),
       statCustom: document.getElementById("statCustom"),
       statShown: document.getElementById("statShown"),
@@ -1319,6 +1455,55 @@
       } catch (error) {
         return fallback;
       }
+    }
+    function loadStoredTheme() {
+      try {
+        const value = localStorage.getItem(STORAGE_KEYS.theme);
+        return THEME_ORDER.indexOf(value) >= 0 ? value : "system";
+      } catch (error) {
+        return "system";
+      }
+    }
+    function resolvedTheme() {
+      if (state.theme === "dark" || state.theme === "light") return state.theme;
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
+      return "light";
+    }
+    function applyTheme() {
+      const theme = state.theme || "system";
+      if (theme === "dark" || theme === "light") {
+        document.documentElement.setAttribute("data-theme", theme);
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+      if (els.themeToggle) {
+        els.themeToggle.textContent = THEME_LABELS[theme] || THEME_LABELS.system;
+        els.themeToggle.setAttribute("aria-label", `Theme mode: ${theme}. Tap to switch.`);
+        els.themeToggle.setAttribute("aria-pressed", theme === "system" ? "false" : "true");
+      }
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeMeta) themeMeta.setAttribute("content", resolvedTheme() === "dark" ? "#0d110c" : "#f6f5f1");
+    }
+    function saveTheme() {
+      try {
+        if (state.theme === "system") localStorage.removeItem(STORAGE_KEYS.theme);
+        else localStorage.setItem(STORAGE_KEYS.theme, state.theme);
+      } catch (error) {}
+    }
+    function cycleTheme() {
+      const index = THEME_ORDER.indexOf(state.theme);
+      state.theme = THEME_ORDER[(index + 1) % THEME_ORDER.length] || "system";
+      saveTheme();
+      applyTheme();
+    }
+    function watchSystemTheme() {
+      if (!window.matchMedia) return;
+      const query = window.matchMedia("(prefers-color-scheme: dark)");
+      const update = () => {
+        if (state.theme === "system") applyTheme();
+      };
+      if (query.addEventListener) query.addEventListener("change", update);
+      else if (query.addListener) query.addListener(update);
     }
     function invalidateDataCaches() {
       runtime.entryCache = null;
@@ -2403,11 +2588,14 @@
       document.getElementById(`${name}View`).classList.add("active");
     }
     function setup() {
+      applyTheme();
+      watchSystemTheme();
       els.schemaBlock.textContent = JSON.stringify(ENTRY_SCHEMA, null, 2);
       els.exampleBlock.textContent = JSON.stringify(BUILT_INS[0], null, 2);
       els.categorySelect.innerHTML = CATEGORIES.map(cat => `<option value="${escapeHtml(cat.id)}">${escapeHtml(cat.label)}</option>`).join("");
       renderEntries();
       document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", () => setView(tab.dataset.view)));
+      if (els.themeToggle) els.themeToggle.addEventListener("click", cycleTheme);
       els.search.addEventListener("input", event => {
         state.query = event.target.value;
         resetListState();
