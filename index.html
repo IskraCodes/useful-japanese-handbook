@@ -153,7 +153,10 @@
       right: 14px;
       z-index: 2;
       display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       justify-content: flex-end;
+      gap: 8px;
     }
     .light-switch {
       min-height: 36px;
@@ -205,6 +208,19 @@
     .light-switch[aria-checked="true"] .switch-thumb {
       transform: translateX(18px);
       background: var(--accent-contrast);
+    }
+    .builder-switch[aria-checked="true"] {
+      background: var(--surface-2);
+      border-color: rgba(var(--accent-rgb),0.64);
+      color: var(--ink);
+    }
+    .builder-switch[aria-checked="true"] .switch-track {
+      border-color: rgba(var(--accent-rgb),0.54);
+      background: rgba(var(--accent-rgb),0.22);
+    }
+    .builder-switch[aria-checked="true"] .switch-thumb {
+      transform: translateX(18px);
+      background: var(--accent);
     }
     .eyebrow {
       color: var(--accent);
@@ -386,6 +402,127 @@
       color: var(--ink);
       padding: 9px 10px;
       outline: none;
+    }
+    .builder-panel {
+      border: 1px solid rgba(var(--accent-rgb),0.34);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(var(--accent-rgb),0.08), transparent 54%), var(--paper);
+      padding: 12px;
+      margin: 0 0 10px;
+      box-shadow: var(--entry-shadow);
+    }
+    .builder-panel[hidden] {
+      display: none;
+    }
+    .builder-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+    }
+    .builder-field {
+      margin: 0;
+    }
+    .builder-field label {
+      display: block;
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .builder-input {
+      width: 100%;
+      min-height: 74px;
+      max-height: 160px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      color: var(--ink);
+      padding: 10px 12px;
+      outline: none;
+      line-height: 1.45;
+    }
+    .builder-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb),0.18);
+    }
+    .builder-output {
+      border-top: 1px solid var(--line);
+      margin-top: 12px;
+      padding-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .builder-empty {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .builder-suggestion {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 12px;
+      line-height: 1.75;
+      font-size: 18px;
+      font-weight: 850;
+    }
+    .builder-token {
+      display: inline-block;
+      border-bottom: 2px solid currentColor;
+      margin-right: 7px;
+      margin-bottom: 2px;
+      white-space: nowrap;
+    }
+    .builder-token.inserted {
+      padding: 0 4px;
+      border-radius: 5px;
+      background: rgba(var(--accent-rgb),0.14);
+    }
+    .builder-token.changed {
+      border-bottom-style: dotted;
+    }
+    .builder-token.punctuation {
+      border-bottom: 0;
+      margin-left: -5px;
+      margin-right: 5px;
+    }
+    .builder-notes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .builder-note {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--tag-ink);
+      padding: 6px 9px;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    .builder-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .builder-related {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .builder-related button {
+      min-height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--ink);
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 800;
     }
     .view {
       display: none;
@@ -1158,6 +1295,16 @@
       .search-row {
         grid-template-columns: 1fr;
       }
+      .builder-grid {
+        grid-template-columns: 1fr;
+      }
+      .builder-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .builder-actions .action-btn {
+        width: 100%;
+      }
       .filters {
         display: none;
       }
@@ -1210,6 +1357,10 @@
             <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
             <span>Light mode</span>
           </button>
+          <button class="light-switch builder-switch" id="builderToggle" type="button" role="switch" aria-checked="false" aria-controls="builderPanel" title="Toggle romaji sentence builder">
+            <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            <span>Romaji Builder</span>
+          </button>
         </div>
         <div>
           <p class="eyebrow">Offline phone handbook</p>
@@ -1245,6 +1396,20 @@
             <button class="pill" id="expandToggle">Open Results</button>
           </div>
         </div>
+        <section class="builder-panel" id="builderPanel" hidden>
+          <div class="builder-grid">
+            <div class="builder-field">
+              <label for="builderInput">Romaji sentence</label>
+              <textarea id="builderInput" class="builder-input" placeholder="watashi nihongo suki?"></textarea>
+            </div>
+            <div class="builder-actions">
+              <button class="action-btn" id="builderCopyBtn" type="button">Copy</button>
+              <button class="action-btn" id="builderSearchBtn" type="button">Search</button>
+              <button class="action-btn" id="builderClearBtn" type="button">Clear</button>
+            </div>
+          </div>
+          <div class="builder-output" id="builderOutput" aria-live="polite"></div>
+        </section>
         <div class="category-select-wrap">
           <label class="visually-hidden" for="categoryFilterSelect">Use case filter</label>
           <select id="categoryFilterSelect" class="category-select" aria-label="Use case filter"></select>
@@ -1349,6 +1514,7 @@
             <li>Use plain Hepburn-style romaji without macrons: <code>arigatou</code>, <code>shou shou</code>, <code>koohii</code>.</li>
             <li>Use <code>romajiParts</code> and <code>exampleRomajiParts</code> with matching <code>text</code>, <code>kana</code>, and <code>romaji</code> chunks when token color alignment matters.</li>
             <li>Kana and romaji tokens can be hovered for a compact definition. The app uses full entries first, then an internal token glossary fallback. Add standalone entries, or optional <code>forms</code>, when you want those tokens to open richer solo cards.</li>
+            <li>Sentence helper API: call <code>window.JapaneseHandbook.buildRomajiSentence("watashi nihongo suki?")</code> to preview suggested particles and question glue.</li>
             <li>Do not auto-color natural English by word number. Use <code>englishParts</code> or <code>exampleEnglishParts</code> only for manually aligned gloss chunks.</li>
             <li>Use <code>exampleNotes</code> for uncommon words in examples. Add <code>ref</code> when the note points to another listed entry.</li>
             <li>Use <code>relatedEntryIds</code> sparingly for strong links, not every vaguely similar phrase.</li>
@@ -1411,7 +1577,8 @@
     const STORAGE_KEYS = {
       custom: "jp-handbook-custom-v1",
       favorites: "jp-handbook-favorites-v1",
-      theme: "jp-handbook-theme-v1"
+      theme: "jp-handbook-theme-v1",
+      builder: "jp-handbook-builder-open-v1"
     };
     const REQUIRED_FIELDS = ["id", "category", "japanese", "kana", "romaji", "english", "tone", "quirks", "example", "exampleEnglish", "exampleNotes", "relatedEntryIds", "source", "isCustom"];
     const INITIAL_VISIBLE_LIMIT = 120;
@@ -1430,13 +1597,16 @@
       editingId: "",
       customEntries: loadJson(STORAGE_KEYS.custom, []),
       favorites: new Set(loadJson(STORAGE_KEYS.favorites, [])),
-      theme: loadStoredTheme()
+      theme: loadStoredTheme(),
+      builderOpen: loadJson(STORAGE_KEYS.builder, false),
+      builderResult: null
     };
     const runtime = {
       entryCache: null,
       lookupIndex: null,
       glossIndex: null,
       searchRecords: null,
+      builderTimer: 0,
       searchTimer: 0,
       activeToken: null,
       tokenHideTimer: 0
@@ -1451,6 +1621,13 @@
       favToggle: document.getElementById("favToggle"),
       expandToggle: document.getElementById("expandToggle"),
       themeToggle: document.getElementById("themeToggle"),
+      builderToggle: document.getElementById("builderToggle"),
+      builderPanel: document.getElementById("builderPanel"),
+      builderInput: document.getElementById("builderInput"),
+      builderOutput: document.getElementById("builderOutput"),
+      builderCopyBtn: document.getElementById("builderCopyBtn"),
+      builderSearchBtn: document.getElementById("builderSearchBtn"),
+      builderClearBtn: document.getElementById("builderClearBtn"),
       statBuilt: document.getElementById("statBuilt"),
       statCustom: document.getElementById("statCustom"),
       statShown: document.getElementById("statShown"),
@@ -1502,6 +1679,26 @@
       state.theme = state.theme === "light" ? "dark" : "light";
       saveTheme();
       applyTheme();
+    }
+    function saveBuilderOpen() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.builder, JSON.stringify(Boolean(state.builderOpen)));
+      } catch (error) {}
+    }
+    function applyBuilderVisibility() {
+      if (!els.builderPanel || !els.builderToggle) return;
+      els.builderPanel.hidden = !state.builderOpen;
+      els.builderToggle.setAttribute("aria-checked", state.builderOpen ? "true" : "false");
+      els.builderToggle.setAttribute("aria-label", state.builderOpen ? "Romaji Builder on" : "Romaji Builder off");
+    }
+    function toggleSentenceBuilder() {
+      state.builderOpen = !state.builderOpen;
+      saveBuilderOpen();
+      applyBuilderVisibility();
+      if (state.builderOpen) {
+        renderBuilderOutput();
+        requestAnimationFrame(() => els.builderInput && els.builderInput.focus());
+      }
     }
     function invalidateDataCaches() {
       runtime.entryCache = null;
@@ -2447,6 +2644,361 @@
       if ("forms" in entry && !Array.isArray(entry.forms)) errors.push("forms must be an array");
       return errors;
     }
+    const BUILDER_PARTICLE_REFS = {
+      wa: "particle-wa",
+      ga: "particle-ga",
+      o: "particle-o",
+      ni: "particle-ni",
+      de: "particle-de",
+      ka: "particle-ka",
+      no: "particle-no",
+      to: "particle-to",
+      kara: "particle-kara",
+      made: "particle-made",
+      mo: "particle-mo",
+      desu: "desu",
+      da: "da",
+      masu: "masu"
+    };
+    const BUILDER_PARTICLES = new Set(["wa", "ga", "o", "wo", "ni", "de", "to", "e", "he", "kara", "made", "mo", "no", "ka", "ya", "ne", "yo"]);
+    const BUILDER_PRONOUN_TOPICS = new Set(["watashi", "boku", "ore", "atashi", "anata", "kimi", "kare", "kanojo", "watashitachi", "bokutachi"]);
+    const BUILDER_TOPIC_HINTS = new Set(["watashi", "boku", "ore", "atashi", "anata", "kimi", "kare", "kanojo", "kyou", "ashita", "kinou", "nihon", "nihongo", "tokyo", "toukyou", "kyoto", "kore", "sore", "are", "koko", "soko", "asoko"]);
+    const BUILDER_PREFERENCE_WORDS = new Set(["suki", "daisuki", "kirai", "nigate", "tokui", "hoshii"]);
+    const BUILDER_I_ADJECTIVES = new Set(["ii", "yoi", "warui", "hayai", "osoi", "takai", "yasui", "chikai", "tooi", "atsui", "samui", "omoshiroi", "tanoshii", "ureshii", "kanashii", "sabishii", "kowai", "nemui", "oishii", "kawaii", "amai", "karai", "muzukashii", "yasashii"]);
+    const BUILDER_NA_ADJECTIVES = new Set(["genki", "daijoubu", "benri", "kirei", "shizuka", "kantan", "taihen", "suki", "daisuki", "kirai", "nigate", "tokui", "muri", "hitsuyou", "shinpai"]);
+    const BUILDER_NOUN_LIKE = new Set(["sensei", "gakusei", "tomodachi", "nihonjin", "amerikajin", "shigoto", "gakkou", "mise", "eki", "toire", "ie", "uchi", "kaisha", "mondai", "daiji", "ame"]);
+    const BUILDER_PLACE_WORDS = new Set(["mise", "eki", "gakkou", "kaisha", "ie", "uchi", "tokyo", "toukyou", "kyoto", "nihon", "koko", "soko", "asoko", "resutoran", "konbini", "hoteru", "heya"]);
+    const BUILDER_COMPOUND_ACTION_NOUNS = new Set(["benkyou", "shitsumon", "denwa", "kakunin", "renraku", "yoyaku", "soudan", "setsumei", "shoukai", "shucchou"]);
+    const BUILDER_VERBS = {
+      iku: { polite: "ikimasu", kind: "movement" },
+      kuru: { polite: "kimasu", kind: "movement" },
+      kaeru: { polite: "kaerimasu", kind: "movement" },
+      hairu: { polite: "hairimasu", kind: "movement" },
+      deru: { polite: "demasu", kind: "movement" },
+      sumu: { polite: "sunde imasu", kind: "location" },
+      au: { polite: "aimasu", kind: "target" },
+      noru: { polite: "norimasu", kind: "target" },
+      oriru: { polite: "orimasu", kind: "target" },
+      taberu: { polite: "tabemasu", kind: "object" },
+      nomu: { polite: "nomimasu", kind: "object" },
+      miru: { polite: "mimasu", kind: "object" },
+      miseru: { polite: "misemasu", kind: "object" },
+      kau: { polite: "kaimasu", kind: "object" },
+      yomu: { polite: "yomimasu", kind: "object" },
+      kaku: { polite: "kakimasu", kind: "object" },
+      tsukau: { polite: "tsukaimasu", kind: "object" },
+      sagasu: { polite: "sagashimasu", kind: "object" },
+      wasureru: { polite: "wasuremasu", kind: "object" },
+      toru: { polite: "torimasu", kind: "object" },
+      okuru: { polite: "okurimasu", kind: "object" },
+      yobu: { polite: "yobimasu", kind: "object" },
+      matsu: { polite: "machimasu", kind: "action" },
+      hanasu: { polite: "hanashimasu", kind: "action" },
+      hataraku: { polite: "hatarakimasu", kind: "action" },
+      benkyou: { polite: "benkyou shimasu", kind: "action" },
+      suru: { polite: "shimasu", kind: "action" },
+      dekiru: { polite: "dekimasu", kind: "action" },
+      wakaru: { polite: "wakarimasu", kind: "subject" },
+      aru: { polite: "arimasu", kind: "subject" },
+      iru: { polite: "imasu", kind: "subject" },
+      neru: { polite: "nemasu", kind: "action" },
+      naku: { polite: "nakimasu", kind: "action" }
+    };
+    const BUILDER_ALIASES = {
+      watasi: "watashi",
+      ohaiyo: "ohayou",
+      arigato: "arigatou",
+      tokyo: "toukyou",
+      kyoto: "kyouto",
+      wo: "o",
+      ha: "wa",
+      desuka: "desu ka",
+      masuka: "masu ka",
+      janai: "ja nai",
+      jyanai: "ja nai",
+      shiteru: "shite iru",
+      shitemasu: "shite imasu"
+    };
+    function builderToken(text, options = {}) {
+      return {
+        text,
+        inserted: Boolean(options.inserted),
+        changedFrom: options.changedFrom || "",
+        ref: options.ref || "",
+        reason: options.reason || "",
+        punctuation: Boolean(options.punctuation)
+      };
+    }
+    function normalizeBuilderTokens(raw) {
+      const spaced = String(raw || "")
+        .toLowerCase()
+        .normalize("NFKC")
+        .replace(/[？]/g, "?")
+        .replace(/[。]/g, ".")
+        .replace(/[、,]/g, " , ")
+        .replace(/[?!.]/g, mark => ` ${mark} `)
+        .replace(/[^a-z0-9?!. ,'-]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+      if (!spaced) return [];
+      const expanded = [];
+      spaced.split(" ").filter(Boolean).forEach(token => {
+        const alias = BUILDER_ALIASES[token] || token;
+        alias.split(" ").filter(Boolean).forEach(piece => expanded.push(piece));
+      });
+      return expanded.map(token => builderToken(token, { punctuation: /^[?!. ,]$/.test(token) }));
+    }
+    function isBuilderPunctuation(token) {
+      return Boolean(token && (token.punctuation || /^[?!. ,]$/.test(token.text)));
+    }
+    function builderWordIndexes(tokens) {
+      return tokens.map((token, index) => ({ token, index })).filter(item => !isBuilderPunctuation(item.token));
+    }
+    function lastBuilderWordIndex(tokens) {
+      const words = builderWordIndexes(tokens);
+      return words.length ? words[words.length - 1].index : -1;
+    }
+    function tokenBefore(tokens, index) {
+      for (let i = index - 1; i >= 0; i -= 1) {
+        if (!isBuilderPunctuation(tokens[i])) return { token: tokens[i], index: i };
+      }
+      return null;
+    }
+    function tokenAfter(tokens, index) {
+      for (let i = index + 1; i < tokens.length; i += 1) {
+        if (!isBuilderPunctuation(tokens[i])) return { token: tokens[i], index: i };
+      }
+      return null;
+    }
+    function isBuilderParticleText(value) {
+      return BUILDER_PARTICLES.has(value);
+    }
+    function insertBuilderToken(tokens, index, text, reason, ref, changes) {
+      tokens.splice(index, 0, builderToken(text, { inserted: true, reason, ref }));
+      changes.push({ type: "insert", text, reason, ref });
+    }
+    function replaceBuilderToken(tokens, index, text, reason, ref, changes) {
+      const previous = tokens[index].text;
+      tokens[index] = builderToken(text, { changedFrom: previous, reason, ref });
+      changes.push({ type: "replace", text, from: previous, reason, ref });
+    }
+    function ensureParticleAfter(tokens, wordIndex, particle, reason, changes) {
+      const next = tokenAfter(tokens, wordIndex);
+      if (next && (next.token.text === particle || isBuilderParticleText(next.token.text))) return;
+      insertBuilderToken(tokens, wordIndex + 1, particle, reason, BUILDER_PARTICLE_REFS[particle] || "", changes);
+    }
+    function ensureParticleBefore(tokens, wordIndex, particle, reason, changes) {
+      const previous = tokenBefore(tokens, wordIndex);
+      if (!previous || previous.token.text === particle || isBuilderParticleText(previous.token.text)) return;
+      insertBuilderToken(tokens, wordIndex, particle, reason, BUILDER_PARTICLE_REFS[particle] || "", changes);
+    }
+    function removeTrailingBuilderPunctuation(tokens) {
+      let punctuation = "";
+      while (tokens.length && isBuilderPunctuation(tokens[tokens.length - 1])) {
+        const text = tokens.pop().text;
+        if (text === "?" || text === ".") punctuation = text;
+      }
+      return punctuation;
+    }
+    function builderEndsWithQuestion(raw, punctuation) {
+      return /[?？]\s*$/.test(String(raw || "")) || punctuation === "?";
+    }
+    function builderVerbInfo(text) {
+      return BUILDER_VERBS[text] || null;
+    }
+    function builderLooksComplete(tokens) {
+      const lastIndex = lastBuilderWordIndex(tokens);
+      if (lastIndex < 0) return false;
+      const last = tokens[lastIndex].text;
+      return last === "desu" || last === "da" || last === "ka" || last === "kudasai" || /masu$/.test(last) || /mashita$/.test(last);
+    }
+    function builderNeedsDesu(text) {
+      return BUILDER_PREFERENCE_WORDS.has(text) || BUILDER_I_ADJECTIVES.has(text) || BUILDER_NA_ADJECTIVES.has(text) || BUILDER_NOUN_LIKE.has(text);
+    }
+    function applyBuilderTopicAndParticles(tokens, changes) {
+      const words = builderWordIndexes(tokens);
+      if (words.length < 2) return;
+      const first = words[0];
+      const second = words[1];
+      const third = words[2];
+      if (BUILDER_PRONOUN_TOPICS.has(first.token.text) && second.token.text !== "wa" && second.token.text !== "ga") {
+        ensureParticleAfter(tokens, first.index, "wa", "Topic marker after the person or thing being talked about.", changes);
+      } else if (words.length > 2 && BUILDER_TOPIC_HINTS.has(first.token.text) && !isBuilderParticleText(second.token.text) && third && (BUILDER_PREFERENCE_WORDS.has(third.token.text) || BUILDER_NA_ADJECTIVES.has(third.token.text))) {
+        ensureParticleAfter(tokens, first.index, "wa", "Topic marker for the opening topic.", changes);
+      }
+      builderWordIndexes(tokens).forEach(item => {
+        if (!BUILDER_PREFERENCE_WORDS.has(item.token.text)) return;
+        const previous = tokenBefore(tokens, item.index);
+        if (!previous || isBuilderParticleText(previous.token.text)) return;
+        ensureParticleBefore(tokens, item.index, "ga", "Preference words like suki/kirai usually mark the liked thing with ga.", changes);
+      });
+    }
+    function applyBuilderVerbParticles(tokens, changes) {
+      const words = builderWordIndexes(tokens);
+      if (!words.length) return;
+      const last = words[words.length - 1];
+      let info = builderVerbInfo(last.token.text);
+      if (last.token.text === "suru" && words.length >= 2 && BUILDER_COMPOUND_ACTION_NOUNS.has(words[words.length - 2].token.text)) {
+        const objectCandidate = words[words.length - 3];
+        if (objectCandidate && !isBuilderParticleText(objectCandidate.token.text)) {
+          ensureParticleAfter(tokens, objectCandidate.index, "o", "Object marker before the thing the suru-action acts on.", changes);
+        }
+        return;
+      }
+      if (!info) return;
+      const previous = tokenBefore(tokens, last.index);
+      if (!previous || isBuilderParticleText(previous.token.text)) return;
+      if (info.kind === "movement" || info.kind === "location" || info.kind === "target") {
+        ensureParticleBefore(tokens, last.index, "ni", "Ni marks a destination, target, or point for this verb.", changes);
+        return;
+      }
+      if (info.kind === "object") {
+        ensureParticleBefore(tokens, last.index, "o", "O marks the thing directly acted on by the verb.", changes);
+        return;
+      }
+      if (info.kind === "action" && BUILDER_PLACE_WORDS.has(previous.token.text)) {
+        ensureParticleBefore(tokens, last.index, "de", "De marks where the action happens.", changes);
+      }
+    }
+    function applyBuilderEnding(tokens, hasQuestion, changes) {
+      const lastIndex = lastBuilderWordIndex(tokens);
+      if (lastIndex < 0) return;
+      const last = tokens[lastIndex].text;
+      if (last === "ka") return;
+      const info = builderVerbInfo(last);
+      if (hasQuestion) {
+        if (last === "desu" || /masu$/.test(last) || /mashita$/.test(last)) {
+          insertBuilderToken(tokens, lastIndex + 1, "ka", "Question mark detected, so the polite question marker ka was added.", BUILDER_PARTICLE_REFS.ka, changes);
+          return;
+        }
+        if (last === "da") {
+          replaceBuilderToken(tokens, lastIndex, "desu", "Da? was softened into the standard polite question form desu ka?", BUILDER_PARTICLE_REFS.desu, changes);
+          insertBuilderToken(tokens, lastIndex + 1, "ka", "Question mark detected, so ka was added.", BUILDER_PARTICLE_REFS.ka, changes);
+          return;
+        }
+        if (info) {
+          replaceBuilderToken(tokens, lastIndex, info.polite, `Plain verb ${last} was swapped to polite ${info.polite} before ka.`, BUILDER_PARTICLE_REFS.masu, changes);
+          insertBuilderToken(tokens, lastIndex + 1, "ka", "Question mark detected, so ka was added.", BUILDER_PARTICLE_REFS.ka, changes);
+          return;
+        }
+        if (builderNeedsDesu(last) || !builderLooksComplete(tokens)) {
+          insertBuilderToken(tokens, lastIndex + 1, "desu", "Polite sentence glue before a question.", BUILDER_PARTICLE_REFS.desu, changes);
+          insertBuilderToken(tokens, lastIndex + 2, "ka", "Question mark detected, so ka was added.", BUILDER_PARTICLE_REFS.ka, changes);
+        }
+        return;
+      }
+      if (info) {
+        replaceBuilderToken(tokens, lastIndex, info.polite, `Plain verb ${last} was changed to polite ${info.polite}.`, BUILDER_PARTICLE_REFS.masu, changes);
+        return;
+      }
+      if (!builderLooksComplete(tokens) && builderNeedsDesu(last)) {
+        insertBuilderToken(tokens, lastIndex + 1, "desu", "Polite sentence landing for a noun/adjective ending.", BUILDER_PARTICLE_REFS.desu, changes);
+      }
+    }
+    function stringifyBuilderTokens(tokens, hasQuestion) {
+      const pieces = [];
+      tokens.forEach(token => {
+        if (!token.text) return;
+        if (token.punctuation || /^[,.!?]$/.test(token.text)) {
+          if (pieces.length) pieces[pieces.length - 1] += token.text;
+          else pieces.push(token.text);
+          return;
+        }
+        String(token.text).split(" ").filter(Boolean).forEach(part => pieces.push(part));
+      });
+      let output = pieces.join(" ").replace(/\s+([,.!?])/g, "$1").trim();
+      if (hasQuestion) output = output.replace(/[?.!]*$/, "") + "?";
+      else if (output && !/[.!?]$/.test(output)) output += ".";
+      return output;
+    }
+    function buildRomajiSentence(raw) {
+      const changes = [];
+      const tokens = normalizeBuilderTokens(raw);
+      if (!tokens.length) {
+        return { raw: String(raw || ""), output: "", tokens: [], changes: [], relatedIds: [], hasQuestion: false };
+      }
+      const trailing = removeTrailingBuilderPunctuation(tokens);
+      const hasQuestion = builderEndsWithQuestion(raw, trailing);
+      applyBuilderTopicAndParticles(tokens, changes);
+      applyBuilderVerbParticles(tokens, changes);
+      applyBuilderEnding(tokens, hasQuestion, changes);
+      tokens.push(builderToken(hasQuestion ? "?" : ".", { punctuation: true }));
+      const relatedIds = [...new Set(changes.map(change => change.ref).filter(Boolean))];
+      return {
+        raw: String(raw || ""),
+        output: stringifyBuilderTokens(tokens, hasQuestion),
+        tokens,
+        changes,
+        relatedIds,
+        hasQuestion
+      };
+    }
+    function scheduleBuilderRender() {
+      window.clearTimeout(runtime.builderTimer);
+      runtime.builderTimer = window.setTimeout(renderBuilderOutput, 120);
+    }
+    function renderBuilderOutput() {
+      if (!els.builderInput || !els.builderOutput) return;
+      const result = buildRomajiSentence(els.builderInput.value);
+      state.builderResult = result;
+      const hasOutput = Boolean(result.output);
+      if (els.builderCopyBtn) els.builderCopyBtn.disabled = !hasOutput;
+      if (els.builderSearchBtn) els.builderSearchBtn.disabled = !hasOutput;
+      if (!hasOutput) {
+        els.builderOutput.innerHTML = `<div class="builder-empty">Type a romaji sentence.</div>`;
+        return;
+      }
+      const renderedTokens = result.tokens.map((token, index) => {
+        const nextToken = result.tokens[index + 1];
+        const classes = [
+          "builder-token",
+          tokenClass(index, { script: token.punctuation ? "mark" : "latin" }),
+          token.inserted ? "inserted" : "",
+          token.changedFrom ? "changed" : "",
+          token.punctuation ? "punctuation" : ""
+        ].filter(Boolean).join(" ");
+        const title = token.changedFrom ? `changed from ${token.changedFrom}` : (token.reason || "");
+        const spacer = token.punctuation || (nextToken && nextToken.punctuation) ? "" : " ";
+        return `<span class="${classes}" title="${escapeHtml(title)}">${escapeHtml(token.text)}</span>${spacer}`;
+      }).join("");
+      const changes = result.changes.length
+        ? result.changes.map(change => {
+          const action = change.type === "replace" ? `${escapeHtml(change.from)} -> ${escapeHtml(change.text)}` : `+ ${escapeHtml(change.text)}`;
+          return `<span class="builder-note"><strong>${action}</strong> ${escapeHtml(change.reason)}</span>`;
+        }).join("")
+        : `<span class="builder-note">No glue changes suggested.</span>`;
+      const related = result.relatedIds.length
+        ? `<div class="builder-related">${result.relatedIds.map(id => `<button type="button" data-focus="${escapeHtml(id)}">${escapeHtml(labelForId(id))}</button>`).join("")}</div>`
+        : "";
+      els.builderOutput.innerHTML = `
+        <div class="builder-suggestion" data-builder-output="${escapeHtml(result.output)}">${renderedTokens}</div>
+        <div class="builder-notes">${changes}</div>
+        ${related}`;
+    }
+    async function copyBuilderOutput() {
+      const text = state.builderResult && state.builderResult.output;
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        showNotice("Romaji sentence copied.");
+      } catch (error) {
+        showNotice("Copy was blocked by this browser. Select the suggestion text manually.", true);
+      }
+    }
+    function searchBuilderOutput() {
+      const text = state.builderResult && state.builderResult.output;
+      if (!text) return;
+      state.query = text.replace(/[.!?]$/g, "");
+      els.search.value = state.query;
+      resetListState();
+      scheduleRenderEntries(0);
+    }
+    function clearBuilderInput() {
+      if (!els.builderInput) return;
+      els.builderInput.value = "";
+      renderBuilderOutput();
+      els.builderInput.focus();
+    }
     function customFromForm(formData) {
       const rawNotes = formData.get("exampleNotes").trim();
       let notes = [];
@@ -2587,12 +3139,27 @@
     }
     function setup() {
       applyTheme();
+      applyBuilderVisibility();
       els.schemaBlock.textContent = JSON.stringify(ENTRY_SCHEMA, null, 2);
       els.exampleBlock.textContent = JSON.stringify(BUILT_INS[0], null, 2);
       els.categorySelect.innerHTML = CATEGORIES.map(cat => `<option value="${escapeHtml(cat.id)}">${escapeHtml(cat.label)}</option>`).join("");
+      renderBuilderOutput();
       renderEntries();
       document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", () => setView(tab.dataset.view)));
       if (els.themeToggle) els.themeToggle.addEventListener("click", toggleLightMode);
+      if (els.builderToggle) els.builderToggle.addEventListener("click", toggleSentenceBuilder);
+      if (els.builderInput) els.builderInput.addEventListener("input", scheduleBuilderRender);
+      if (els.builderCopyBtn) els.builderCopyBtn.addEventListener("click", copyBuilderOutput);
+      if (els.builderSearchBtn) els.builderSearchBtn.addEventListener("click", searchBuilderOutput);
+      if (els.builderClearBtn) els.builderClearBtn.addEventListener("click", clearBuilderInput);
+      if (els.builderOutput) {
+        els.builderOutput.addEventListener("click", event => {
+          const focus = event.target.closest("[data-focus]");
+          if (!focus) return;
+          event.preventDefault();
+          focusEntry(focus.dataset.focus, { preserveContext: true });
+        });
+      }
       els.search.addEventListener("input", event => {
         state.query = event.target.value;
         resetListState();
@@ -2778,6 +3345,7 @@
       lookupTokenInfo(token) {
         return lookupToken(token || {});
       },
+      buildRomajiSentence: raw => buildRomajiSentence(raw || ""),
       addCustom(entry) {
         const candidate = { ...entry, source: "user", isCustom: true };
         const errors = validateEntry(candidate);
