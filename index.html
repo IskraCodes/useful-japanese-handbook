@@ -635,7 +635,7 @@
       padding-bottom: 1px;
     }
     .romaji-primary .lookup-token {
-      cursor: help;
+      cursor: pointer;
       border-radius: 4px;
       padding-inline: 2px;
       margin-inline: -2px;
@@ -680,7 +680,7 @@
       padding-bottom: 1px;
     }
     .kana-read .lookup-token, .romaji-read .lookup-token {
-      cursor: help;
+      cursor: pointer;
       border-radius: 4px;
       padding-inline: 2px;
       margin-inline: -2px;
@@ -2492,7 +2492,9 @@
         ["data-token-base", token.base],
         ["data-token-base-kana", token.baseKana],
         ["data-token-base-romaji", token.baseRomaji],
-        ["aria-label", `${token.text || token.kana || token.romaji}: hover for forms; click if a solo card exists`]
+        ["role", "button"],
+        ["tabindex", "0"],
+        ["aria-label", `${token.text || token.kana || token.romaji}: click or press Enter for meaning and forms`]
       ];
       return pairs.map(([key, value]) => `${key}="${escapeHtml(value)}"`).join(" ");
     }
@@ -3928,17 +3930,6 @@
           state.openEntryIds.delete(details.dataset.entryId);
         }
       }, true);
-      els.entries.addEventListener("pointerover", event => {
-        const token = event.target.closest("[data-lookup-token]");
-        if (!token || !els.entries.contains(token)) return;
-        if (runtime.activeToken === token) return;
-        showTokenPopover(token);
-      });
-      els.entries.addEventListener("pointerout", event => {
-        const token = event.target.closest("[data-lookup-token]");
-        if (!token || !els.entries.contains(token)) return;
-        hideTokenPopover();
-      });
       els.entries.addEventListener("click", event => {
         const openPersonal = event.target.closest("[data-open-personal]");
         if (openPersonal && els.entries.contains(openPersonal)) {
@@ -4030,6 +4021,13 @@
         }
       });
       els.entries.addEventListener("keydown", event => {
+        const token = event.target.closest("[data-lookup-token]");
+        if (token && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          event.stopPropagation();
+          token.click();
+          return;
+        }
         const tagInput = event.target.closest("[data-personal-tag-input]");
         if (!tagInput || event.key !== "Enter") return;
         event.preventDefault();
